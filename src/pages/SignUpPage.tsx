@@ -1,20 +1,24 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const SignUpPage = function(){
 
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [errorMessage, setErrorMessage] = useState('');
+
     const handleSubmit = async function(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        if(email.trim() === '' || password.trim() === ''){
-            console.log('email / password is empty');
+        if(email.trim() === '' || password.trim() === '' || username.trim() === ''){
+            setErrorMessage('Fields cannot be empty');
             return;
         };
-
         const payload = {
             method: 'POST',
             headers: {
@@ -27,10 +31,18 @@ const SignUpPage = function(){
                 password: password
             })
         };
+        try{
+            const res = await fetch(baseURL + '/auth/signup', payload);
+            const data = await res.json();
 
-        const res = await fetch(baseURL + '/auth/signup', payload);
-        const data = await res.json();
-        console.log(data);
+            if(data.message === 'signed up'){
+                navigate('/complete');
+            }else{
+                throw new Error();
+            }
+        }catch{
+            setErrorMessage('Error has occured. Please try again later');
+        }
     };
 
     return(
@@ -38,38 +50,33 @@ const SignUpPage = function(){
             <div>
                 <form onSubmit={handleSubmit}>
                     <h1>Register</h1>
-
                     <input 
                         type="text"
                         placeholder='username'
                         value={username}
-                        onChange={function(e){setUsername(e.target.value)}}
+                        onChange={function(e){setUsername(e.target.value); setErrorMessage('')}}
                     />
-
                     <br />
                     <br />
-
                     <input 
                         type="email"
                         placeholder='email'
                         value={email}
-                        onChange={function(e){setEmail(e.target.value)}}
+                        onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
                     />
-
                     <br />
                     <br />
-
                     <input 
                         type="password"
                         placeholder='password'
-                        onChange={function(e){setPassword(e.target.value)}}
+                        value={password}
+                        onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
                     />
-
                     <br />
                     <br />
-
                     <button type="submit">REGISTER</button>
                 </form>
+                <p>{errorMessage}</p>
             </div>
         </>
     )
