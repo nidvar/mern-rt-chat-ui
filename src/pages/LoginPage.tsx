@@ -1,16 +1,21 @@
 import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = function(){
 
+    // const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async function(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
         if(email.trim() === '' || password.trim() === ''){
-            console.log('email / password is empty');
+            setErrorMessage('Fields must not be empty');
             return;
         };
 
@@ -26,9 +31,18 @@ const LoginPage = function(){
             })
         };
 
-        const res = await fetch(baseURL + '/auth/login', payload);
-        const data = await res.json();
-        console.log(data);
+        try{
+            const res = await fetch(baseURL + '/auth/login', payload);
+            if(res.ok){
+                const data = await res.json();
+                console.log(data);
+            }else{
+                const data = await res.json();
+                setErrorMessage(data.message);
+            }
+        }catch{
+            setErrorMessage('There has been an error. Please try again later.');
+        }
     };
 
     return (
@@ -41,7 +55,7 @@ const LoginPage = function(){
                         type="email"
                         placeholder='email'
                         value={email}
-                        onChange={function(e){setEmail(e.target.value)}}
+                        onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
                     />
 
                     <br />
@@ -50,7 +64,8 @@ const LoginPage = function(){
                     <input 
                         type="password"
                         placeholder='password'
-                        onChange={function(e){setPassword(e.target.value)}}
+                        value={password}
+                        onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
                     />
 
                     <br />
@@ -58,10 +73,7 @@ const LoginPage = function(){
 
                     <button type="submit">LOGIN</button>
                 </form>
-                <br />
-                <hr />
-                <br />
-                <button>LOGOUT</button>
+                <p>{errorMessage}</p>
             </div>
         </>
     )

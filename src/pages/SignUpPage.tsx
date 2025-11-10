@@ -34,11 +34,11 @@ const SignUpPage = function(){
         try{
             const res = await fetch(baseURL + '/auth/signup', payload);
             const data = await res.json();
-
-            if(data.message === 'signed up'){
+            if(res.ok){
+                console.log(data.message);
                 navigate('/complete');
             }else{
-                throw new Error();
+                setErrorMessage(data.message);
             }
         }catch{
             setErrorMessage('Error has occured. Please try again later');
