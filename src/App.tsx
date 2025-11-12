@@ -5,7 +5,10 @@ import ChatPage from './pages/ChatPage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
 import CompletePage from "./pages/CompletePage.tsx";
 
+import { useAuthStore } from "./store/useAuthStore.ts";
+
 function App() {
+    useAuthStore();
     return (
         <>
             <Routes>

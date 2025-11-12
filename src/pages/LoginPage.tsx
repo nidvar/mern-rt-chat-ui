@@ -1,9 +1,13 @@
 import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
+import { useAuthStore } from '../store/useAuthStore';
+
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = function(){
+
+    const authStore = useAuthStore();
 
     // const navigate = useNavigate();
 
@@ -36,6 +40,7 @@ const LoginPage = function(){
             if(res.ok){
                 const data = await res.json();
                 console.log(data);
+                authStore.login();
             }else{
                 const data = await res.json();
                 setErrorMessage(data.message);
