@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import { useEffect } from "react";
 
@@ -9,8 +9,18 @@ import CompletePage from "./pages/CompletePage.tsx";
 
 import { useAuthStore } from "./store/useAuthStore.ts";
 
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 function App() {
     const authStore = useAuthStore();
+
+    const logout = async function(){
+        const payload = {
+            method: 'POST',
+            credentials: 'include' as RequestCredentials
+        }
+        await fetch(baseURL + '/auth/logout', payload);
+    }
 
     useEffect(()=>{
         authStore.authenticate();
@@ -20,7 +30,8 @@ function App() {
         <>
             <p>Logged in: {authStore.isLoggedIn}</p>
             {
-                authStore.isLoggedIn? 'logged in': 'logged out'
+                authStore.isLoggedIn? <div><button onClick={logout}>LOGOUT</button></div>: 
+                <div><Link to='/login'>Login</Link></div>
             }
             <Routes>
                 <Route path='/' element={<ChatPage />} />

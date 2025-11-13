@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthStore>(function(set){
                 });
                 const data = await res.json();
                 console.log(data);
-                set({isLoggedIn: true});
+                set({isLoggedIn: data.isLoggedIn});
             }catch(error){
                 console.log(error);
             }finally{
