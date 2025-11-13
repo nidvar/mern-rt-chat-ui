@@ -1,6 +1,7 @@
 type AuthStore = {
     isLoading: boolean
     isLoggedIn: boolean
+    errorMessage: string
     authUser: {
         username: string
         email: string
@@ -16,6 +17,7 @@ export const useAuthStore = create<AuthStore>(function(set){
     return {
         isLoading: false,
         isLoggedIn: false,
+        errorMessage: '',
         authUser: {
             username: '',
             email: ''
@@ -27,9 +29,16 @@ export const useAuthStore = create<AuthStore>(function(set){
                     method: 'GET',
                     credentials: 'include',
                 });
-                const data = await res.json();
-                console.log(data);
-                set({isLoggedIn: data.isLoggedIn});
+                if(res.ok){
+                    const data = await res.json();
+                    console.log(data);
+                    set({isLoggedIn: data.isLoggedIn});
+                }else{
+                    console.log(res);
+                    if(res.statusText){
+                        set({errorMessage: res.statusText});
+                    }
+                }
             }catch(error){
                 console.log(error);
             }finally{

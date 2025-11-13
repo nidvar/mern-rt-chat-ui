@@ -20,6 +20,13 @@ function App() {
             credentials: 'include' as RequestCredentials
         }
         await fetch(baseURL + '/auth/logout', payload);
+        useAuthStore.setState({
+            isLoggedIn: false,
+            authUser: {
+                username: '',
+                email: ''
+            },
+        });
     }
 
     useEffect(()=>{
@@ -28,9 +35,9 @@ function App() {
 
     return (
         <>
-            <p>Logged in: {authStore.isLoggedIn}</p>
             {
-                authStore.isLoggedIn? <div><button onClick={logout}>LOGOUT</button></div>: 
+                authStore.isLoggedIn? 
+                <div><button onClick={logout}>LOGOUT</button></div>: 
                 <div><Link to='/login'>Login</Link></div>
             }
             <Routes>
