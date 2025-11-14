@@ -13,7 +13,12 @@ const Header = function({logout, isLoggedIn}:{ logout: ()=> void, isLoggedIn: bo
                     <button onClick={logout}>LOGOUT</button>
                 </div>: 
                 <div>
-                    <Link to='/login'>LOGIN</Link>
+                    <div>
+                        <Link to='/login'>LOGIN</Link>
+                    </div>
+                    <div>
+                        <Link to='/signup'>REGISTER</Link>
+                    </div>
                 </div>
             }
         </>
