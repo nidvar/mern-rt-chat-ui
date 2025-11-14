@@ -18,7 +18,14 @@ const SignUpPage = function(){
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleImageUpload = function(e: React.ChangeEvent<HTMLInputElement>){
+        setErrorMessage('');
         if(e.target.files && e.target.files[0]){
+            if(e.target.files[0].size > 1500000){
+                setErrorMessage('Image must be smaller than 1.5mb');
+                setImage('');
+                e.target.files = null;
+                return;
+            }
             const image = e.target.files[0];
             const reader = new FileReader();
             reader.readAsDataURL(image);
@@ -36,6 +43,9 @@ const SignUpPage = function(){
 
     const handleSubmit = async function(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
+        if(errorMessage != ''){
+            return
+        }
         if(email.trim() === '' || password.trim() === '' || username.trim() === ''){
             setErrorMessage('Fields cannot be empty');
             return;
@@ -115,8 +125,8 @@ const SignUpPage = function(){
                     />
                     <br />
                     <br />
-                    
-                    <button type="submit">REGISTER</button>
+
+                    <button type="submit" disabled={errorMessage != ''}>REGISTER</button>
                 </form>
                 <p>{errorMessage}</p>
             </div>
