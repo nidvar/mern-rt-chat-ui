@@ -20,7 +20,8 @@ const ProfilePage = function(){
         <>
             <div>
                 <h1>Profile Page</h1>
-                <button onClick={updateProfile}>CLICK</button>
+                
+                <button onClick={updateProfile}>UPDATE</button>
             </div>
         </>
     )

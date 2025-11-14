@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import { useEffect } from "react";
 
@@ -9,6 +9,8 @@ import CompletePage from "./pages/CompletePage.tsx";
 
 import { useAuthStore } from "./store/useAuthStore.ts";
 import ProfilePage from "./pages/ProfilePage.tsx";
+
+import Header from '../src/components/Header.tsx';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -36,11 +38,8 @@ function App() {
 
     return (
         <>
-            {
-                authStore.isLoggedIn? 
-                <div><button onClick={logout}>LOGOUT</button></div>: 
-                <div><Link to='/login'>Login</Link></div>
-            }
+            <Header logout={logout} isLoggedIn={authStore.isLoggedIn} />
+            <hr />
             <Routes>
                 <Route path='/' element={<ChatPage />} />
                 <Route path='/signup' element={<SignUpPage />} />
