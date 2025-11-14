@@ -27,7 +27,8 @@ function App() {
             isLoggedIn: false,
             authUser: {
                 username: '',
-                email: ''
+                email: '',
+                profilePic: '',
             },
         });
     }
@@ -38,7 +39,7 @@ function App() {
 
     return (
         <>
-            <Header logout={logout} isLoggedIn={authStore.isLoggedIn} />
+            <Header logout={logout} isLoggedIn={authStore.isLoggedIn} profilePic={authStore.authUser.profilePic} />
             <hr />
             <Routes>
                 <Route path='/' element={<ChatPage />} />

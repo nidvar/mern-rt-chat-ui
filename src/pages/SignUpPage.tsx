@@ -49,17 +49,20 @@ const SignUpPage = function(){
             body: JSON.stringify({
                 email: email,
                 username: username,
-                password: password
+                password: password,
+                profilePic: image
             })
         };
         try{
             const res = await fetch(baseURL + '/auth/signup', payload);
-            const data = await res.json();
             if(res.ok){
+                const data = await res.json();
                 console.log(data.message);
                 navigate('/complete');
             }else{
-                setErrorMessage(data.message);
+                const error = await res.json();
+                console.log(error);
+                setErrorMessage('error');
             }
         }catch{
             setErrorMessage('Error has occured. Please try again later');
@@ -72,8 +75,11 @@ const SignUpPage = function(){
                 <form onSubmit={handleSubmit}>
                     <h1>Register</h1>
                     <img 
-                        src={image || undefined}
+                        src={image || "blank_profile.jpg"}
                     />
+                    <br />
+                    <br />
+
                     <input 
                         type="file"
                         accept="image/*"
@@ -91,6 +97,7 @@ const SignUpPage = function(){
                     />
                     <br />
                     <br />
+
                     <input 
                         type="email"
                         placeholder='email'
@@ -99,6 +106,7 @@ const SignUpPage = function(){
                     />
                     <br />
                     <br />
+
                     <input 
                         type="password"
                         placeholder='password'
@@ -107,6 +115,7 @@ const SignUpPage = function(){
                     />
                     <br />
                     <br />
+                    
                     <button type="submit">REGISTER</button>
                 </form>
                 <p>{errorMessage}</p>
