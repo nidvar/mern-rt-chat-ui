@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage.tsx';
 import CompletePage from "./pages/CompletePage.tsx";
 
 import { useAuthStore } from "./store/useAuthStore.ts";
+import ProfilePage from "./pages/ProfilePage.tsx";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -18,7 +19,7 @@ function App() {
         const payload = {
             method: 'POST',
             credentials: 'include' as RequestCredentials
-        }
+        };
         await fetch(baseURL + '/auth/logout', payload);
         useAuthStore.setState({
             isLoggedIn: false,
@@ -44,6 +45,7 @@ function App() {
                 <Route path='/' element={<ChatPage />} />
                 <Route path='/signup' element={<SignUpPage />} />
                 <Route path='/login' element={<LoginPage />} />
+                <Route path='/profile' element={<ProfilePage />} />
                 <Route path='/complete' element={<CompletePage />} />
             </Routes>
         </>
