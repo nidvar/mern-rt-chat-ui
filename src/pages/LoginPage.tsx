@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -82,8 +82,6 @@ const LoginPage = function(){
                     <button type="submit">LOGIN</button>
                 </form>
                 <p>{errorMessage}</p>
-                <br />
-                <Link to='/'>HOME</Link>
             </div>
         </>
     )

@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 
 const Header = function({logout, isLoggedIn}:{ logout: ()=> void, isLoggedIn: boolean }){
     return(
-        <>
+        <>  
+            <Link to='/'>HOME</Link>
+            <br />
             {
                 isLoggedIn?
                 <div>
@@ -11,7 +13,7 @@ const Header = function({logout, isLoggedIn}:{ logout: ()=> void, isLoggedIn: bo
                     <button onClick={logout}>LOGOUT</button>
                 </div>: 
                 <div>
-                    <Link to='/login'>Login</Link>
+                    <Link to='/login'>LOGIN</Link>
                 </div>
             }
         </>
