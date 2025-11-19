@@ -34,7 +34,15 @@ export const useAuthStore = create<AuthStore>(function(set){
                 if(res.ok){
                     const data = await res.json();
                     console.log(data);
-                    set({isLoggedIn: data.isLoggedIn});
+                    set((state)=>{
+                        return {
+                            isLoggedIn: data.isLoggedIn,
+                            authUser: {
+                                ...state.authUser,
+                                profilePic: data.userData.profilePic
+                            }
+                        }
+                    });
                 }else{
                     console.log(res);
                     if(res.statusText){
