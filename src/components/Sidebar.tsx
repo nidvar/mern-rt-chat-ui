@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useChatStore } from '../store/useChatStore';
 
 type SidebarTypes = {
     isLoggedIn: boolean
@@ -7,37 +7,35 @@ type SidebarTypes = {
     logout: ()=> void
 };
 
-const Sidebar = function({logout, isLoggedIn, profilePic}:SidebarTypes){
-    const [showChats, setShowChats] = useState(false);
+const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
+    const chatStore = useChatStore();
 
-    const toggleChats = function(){
-        const showChatState = showChats;
-        setShowChats(!showChatState);
-    }
+    console.log(chatStore)
     return(
         <>
             <div className='sidebar'>
-                <Link to='/'>HOME</Link>
                 <br />
                 {
                     isLoggedIn?
-                    <div>
+                    <>
                         <Link to='/profile'>
                             <img src={profilePic || "blank_profile.jpg"} className='profile-image'/>
                         </Link>
                         <br /><br />
-                        <button onClick={toggleChats}>Chats</button>
+                        <button onClick={function(){chatStore.toggleAllChatView()}}>Chats</button>
+                        <br /><br />
+                        <button onClick={function(){chatStore.toggleMemberView()}}>Members</button>
                         <br /><br />
                         <button onClick={logout}>L-OUT</button>
-                    </div>: 
-                    <div>
+                    </>: 
+                    <>
                         <div>
                             <Link to='/login'>L-IN</Link>
                         </div>
                         <div>
                             <Link to='/signup'>S-UP</Link>
                         </div>
-                    </div>
+                    </>
                 }
             </div>
         </>

@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useAuthStore } from "../store/useAuthStore";
+import { useChatStore } from '../store/useChatStore';
+
+import React from "react";
 
 type contactsType = {
     _id: string
@@ -10,58 +13,40 @@ type contactsType = {
     createdAt: string
 }
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 
 const ChatPage = function(){
 
     const authState = useAuthStore();
-
-    const [contacts, setContacts] = useState<contactsType[] | null>(null);
-
-    const grabContacts = async ()=>{
-        const res = await fetch(baseUrl + '/messages/contacts', {
-            credentials: 'include'
-        });
-        const data = await res.json();
-        console.log(data);
-        setContacts(data.users);
-    };
-
-    const getAllChats = async ()=>{
-        const res = await fetch(baseUrl + '/messages/chats', {
-            credentials: 'include'
-        });
-        const data = await res.json();
-        console.log(data);
-    };
+    const chatState = useChatStore();
 
     useEffect(()=>{
         if(authState.isLoggedIn === true){
-            grabContacts();
-            getAllChats();
+            chatState.grabContacts();
+            chatState.getAllChats();
         };
-    }, [authState]);
-
-    const test = function(){
-        console.log(contacts);
-    }
+    }, [authState.isLoggedIn]);
 
     return(
         <>
             <div>
                 <h1>Chat Page</h1>
                 <div>
-                    <div>
-                        Members: <br />{
-                            contacts?.map((item: contactsType)=>{
-                                return(
-                                    <>
-                                        <button>{item.username}</button><br/>
-                                    </>
-                                )
-                            })
-                        }
-                    </div>
+                    {
+                        chatState.showMembers === true?
+                        <div>
+                            Members: <br />{
+                                chatState.allMembers?.map((item: contactsType)=>{
+                                    return(
+                                        <React.Fragment key={item._id}>
+                                            <button>{item.username}</button><br/>
+                                        </React.Fragment>
+                                    )
+                                })
+                            }
+                        </div>:
+                        ''
+                    }
                     <br />
                     <hr />
                     <div>
@@ -79,7 +64,6 @@ const ChatPage = function(){
                         <br />
                         <br />
                         <button>SEND</button>
-                        <button onClick={test}>TEST</button>
                     </div>
                 </div>
             </div>
