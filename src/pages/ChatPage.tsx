@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from '../store/useChatStore';
@@ -9,20 +9,30 @@ import ChatList from "../components/ChatList";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
+type MessageType = {
+    _id: string
+    senderId: string
+    recieverId: string
+    text: string
+    createdAt: string
+    updatedAt: string
+    __v: 0
+}
+
 const ChatPage = function(){
 
     const authState = useAuthStore();
     const chatState = useChatStore();
+
+    const [messages, setMessages] = useState<MessageType[] | null>(null)
 
     const grabChats = async function(){
         const res = await fetch(baseUrl + '/messages/' + chatState.selectedChatPartner, {
             method: 'GET',
             credentials: 'include' as RequestCredentials
         });
-        console.log(res);
         const data = await res.json();
-
-        console.log(data);
+        setMessages(data);
     }
 
     useEffect(()=>{
@@ -50,7 +60,7 @@ const ChatPage = function(){
                         chatState.showAllChats?<ChatList allChats={chatState.allChatPartners} />:''
                     }
                     {
-                        chatState.showSingleChat?<ChatContainer chatPartner={chatState.selectedChatPartner} />:''
+                        chatState.showSingleChat?<ChatContainer messages={messages}/>:''
                     }
                 </div>
             </div>

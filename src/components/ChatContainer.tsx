@@ -1,13 +1,31 @@
 type ChatPartnerProp = {
-    chatPartner: string
+    messages: Message[] | null
 }
 
-const ChatContainer = ({chatPartner}: ChatPartnerProp)=>{
-    console.log(chatPartner);
+type Message = {
+    _id: string
+    senderId: string
+    recieverId: string
+    text: string
+    createdAt: string
+    updatedAt: string
+    __v: 0
+}
+
+const ChatContainer = ({messages}: ChatPartnerProp)=>{
     return(
         <>
             <div>
-                Chatbox:
+                {
+                    messages?.map((item)=>{
+                        return(
+                            <div>
+                                <p>{item.text}</p>
+                                <p>{item.createdAt}</p>
+                            </div>
+                        )
+                    })
+                }
                 <br />
                 <br />
                 <textarea>
