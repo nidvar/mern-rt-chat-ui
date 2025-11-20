@@ -23,7 +23,7 @@ const ContactsList = ({allContacts}: contactListProp)=>{
                         return(
                             <React.Fragment key={item._id}>
                                 <button 
-                                    onClick={function(){chatState.toggleSingleChatView()}}
+                                    onClick={function(){chatState.toggleSingleChatView(item._id)}}
                                 >{item.username}</button><br/>
                             </React.Fragment>
                         )

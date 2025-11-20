@@ -1,14 +1,15 @@
 type ChatStoreType = {
-    allChats: []
+    selectedChatPartner: string,
+    allChatPartners: []
     allContacts: []
     showAllChats: boolean
     showContacts: boolean
     showSingleChat: boolean
     toggleAllChatView: ()=> void
     toggleMemberView: ()=> void
-    toggleSingleChatView: ()=> void
+    toggleSingleChatView: (id: string)=> void
     grabContacts: ()=> void
-    getAllChats: ()=> void
+    getChatPartners: ()=> void
 };
 
 import { create } from 'zustand';
@@ -17,7 +18,8 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const useChatStore = create<ChatStoreType>(function(set){
     return {
-        allChats: [],
+        selectedChatPartner:'',
+        allChatPartners: [],
         allContacts: [],
         showAllChats: false,
         showContacts: false,
@@ -36,11 +38,12 @@ export const useChatStore = create<ChatStoreType>(function(set){
                 showSingleChat: false,
             });
         },
-        toggleSingleChatView: () => {
+        toggleSingleChatView: (id: string) => {
             set({
                 showAllChats: false,
                 showContacts: false,
                 showSingleChat: true,
+                selectedChatPartner: id
             });
         },
         grabContacts: async ()=>{
@@ -51,13 +54,13 @@ export const useChatStore = create<ChatStoreType>(function(set){
             console.log(data);
             set({allContacts: data.users})
         },
-        getAllChats: async ()=>{
-            const res = await fetch(baseUrl + '/messages/chats', {
+        getChatPartners: async ()=>{
+            const res = await fetch(baseUrl + '/messages/chatpartners', {
                 credentials: 'include'
             });
             const data = await res.json();
             console.log(data);
-            set({allChats: data})
+            set({allChatPartners: data})
         }
     }
 })

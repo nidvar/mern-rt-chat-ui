@@ -1,5 +1,9 @@
+import { Link } from 'react-router-dom'
+
 const ProfilePage = function(){
+
     const updateProfile = async function(){
+        return
         const payload = {
             method: 'PUT',
             headers: {
@@ -22,6 +26,8 @@ const ProfilePage = function(){
                 <h1>Profile Page</h1>
                 
                 <button onClick={updateProfile}>UPDATE</button>
+
+                <Link to='/'>BACK</Link>
             </div>
         </>
     )

@@ -9,8 +9,6 @@ type SidebarTypes = {
 
 const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
     const chatStore = useChatStore();
-
-    console.log(chatStore)
     return(
         <>
             <div className='sidebar'>
