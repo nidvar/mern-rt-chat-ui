@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
 
@@ -16,6 +16,7 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 function App() {
     const authStore = useAuthStore();
+    const navigate = useNavigate();
 
     const logout = async function(){
         const payload = {
@@ -31,6 +32,7 @@ function App() {
                 profilePic: '',
             },
         });
+         navigate('/login');
     }
 
     useEffect(()=>{
@@ -40,15 +42,18 @@ function App() {
     return (
         <>
             <div className="my-app">
-                <Sidebar logout={logout} isLoggedIn={authStore.isLoggedIn} profilePic={authStore.authUser.profilePic} />
-                <hr />
-                <Routes>
-                    <Route path='/' element={<ChatPage />} />
-                    <Route path='/signup' element={<SignUpPage />} />
-                    <Route path='/login' element={<LoginPage />} />
-                    <Route path='/profile' element={<ProfilePage />} />
-                    <Route path='/complete' element={<CompletePage />} />
-                </Routes>
+                <div className="my-app-container">
+                    <Sidebar logout={logout} isLoggedIn={authStore.isLoggedIn} profilePic={authStore.authUser.profilePic} />
+                    <div className="main-view">
+                        <Routes>
+                            <Route path='/' element={<ChatPage />} />
+                            <Route path='/signup' element={<SignUpPage />} />
+                            <Route path='/login' element={<LoginPage />} />
+                            <Route path='/profile' element={<ProfilePage />} />
+                            <Route path='/complete' element={<CompletePage />} />
+                        </Routes>
+                    </div>
+                </div>
             </div>
         </>
     )

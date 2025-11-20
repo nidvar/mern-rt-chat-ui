@@ -1,6 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+import { useAuthStore } from "../store/useAuthStore";
 
 const ProfilePage = function(){
+
+    const authState = useAuthStore();
 
     const updateProfile = async function(){
         return
@@ -21,15 +25,11 @@ const ProfilePage = function(){
     };
 
     return(
-        <>
-            <div>
-                <h1>Profile Page</h1>
-                
-                <button onClick={updateProfile}>UPDATE</button>
-
-                <Link to='/'>BACK</Link>
-            </div>
-        </>
+        <div className='profile-page'>
+            <img className="profile-page-image" src={authState.authUser.profilePic || "blank_profile.jpg"} />
+            <button onClick={updateProfile}>UPDATE</button>
+            <Link to='/'>BACK</Link>
+        </div>
     )
 };
 

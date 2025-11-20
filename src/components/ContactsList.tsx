@@ -1,4 +1,3 @@
-import React from "react";
 import { useChatStore } from '../store/useChatStore';
 
 type contactsType = {
@@ -21,11 +20,14 @@ const ContactsList = ({allContacts}: contactListProp)=>{
                 {
                     allContacts.map((item: contactsType)=>{
                         return(
-                            <React.Fragment key={item._id}>
-                                <button 
-                                    onClick={function(){chatState.toggleSingleChatView(item._id)}}
-                                >{item.username}</button><br/>
-                            </React.Fragment>
+                            <div 
+                                className="chats-link"
+                                key={item._id} 
+                                onClick={function(){chatState.toggleSingleChatView(item._id)}}
+                            >
+                                <img src={item.profilePic} className="profile-image"/>
+                                <p>{item.username}</p>
+                            </div>
                         )
                     })
                 }

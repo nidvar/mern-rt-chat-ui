@@ -4,20 +4,143 @@
     box-sizing: border-box;
 }
 
-.my-app {
-    display: flex;
+textarea {
+    width: 100%;
 }
 
-.sidebar {
+.my-app {
+    padding: 30px;
     height: 100vh;
+}
+
+.my-app-container {
+    border-radius: 8px;
+    display: flex;
+    height: 100%;
+    border: 1px solid grey;
+}
+
+/* sidebar */
+
+.sidebar {
+    border-right: 1px solid grey;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    height: 100%;
     min-width: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px 5px;
+}
+
+.top-sidebar-nav {
+    height: 150px;
+    justify-content: space-between;
+}
+
+.inner-sidebar {
+    height: 85vh;
+    justify-content: space-between;
+}
+
+/* main block */
+
+.main-view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+/* chatpage */
+
+.chat-page {
+    height: 100%;
+}
+
+.chat-container {
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.chat-container-header {
+    border-bottom: 1px solid grey;
+    width: 100%;
+    padding: 15px;
+}
+
+.chat-container-inner {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.chat-box {
+    width: 100%;
+}
+
+.single-message {
+    margin: 15px 0;
+    border: 1px solid grey;
+    border-radius: 6px;
+    padding: 15px 15px 5px 15px;
+    width: 400px;
+}
+
+.message-input {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* profile page */
+
+.profile-page {
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.profile-page-image {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+
+/* utilities */
+
+.chats-link {
+    border: 1px solid grey;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 6px;
 }
 
 .profile-image {
     width:40px;
     height:40px;
     border-radius: 50%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chats-link:hover {
+    cursor: pointer;
 }

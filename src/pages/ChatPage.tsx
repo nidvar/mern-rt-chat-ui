@@ -49,22 +49,24 @@ const ChatPage = function(){
     }, [chatState.selectedChatPartner])
 
     return(
-        <>
-            <div>
-                <div>
-                    {
-                        chatState.showContacts === true?
-                        <ContactsList allContacts={chatState.allContacts} />:''
-                    }
-                    {
-                        chatState.showAllChats?<ChatList allChatPartners={chatState.allChatPartners} />:''
-                    }
-                    {
-                        chatState.showSingleChat?<ChatContainer messages={messages}/>:''
-                    }
-                </div>
-            </div>
-        </>
+        <div className="chat-page">
+            {
+                chatState.showContacts === false &&
+                chatState.showAllChats === false &&
+                chatState.showSingleChat === false?
+                <h1>Chat app</h1>: ''
+            }
+            {
+                chatState.showContacts === true?
+                <ContactsList allContacts={chatState.allContacts} />:''
+            }
+            {
+                chatState.showAllChats === true?<ChatList allChatPartners={chatState.allChatPartners} />:''
+            }
+            {
+                chatState.showSingleChat === true?<ChatContainer messages={messages}/>:''
+            }
+        </div>
     )
 };
 

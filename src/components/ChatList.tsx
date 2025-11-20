@@ -23,9 +23,16 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
             <div>
                 {allChatPartners.map((item)=>{
                     return(
-                        <div key={item._id} onClick={function(){chatState.toggleSingleChatView(item._id)}}>
+                        <div 
+                            className='chats-link'
+                            key={item._id}
+                            onClick={function(){chatState.toggleSingleChatView(item._id)}}
+                        >
                             <img src={item.profilePic} className="profile-image"/>
-                            <p>{item.username}</p>
+                            <div>
+                                <p>{item.username}</p>
+                                <p>.....</p>
+                            </div>
                         </div>
                     )
                 })}
