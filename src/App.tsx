@@ -10,7 +10,7 @@ import CompletePage from "./pages/CompletePage.tsx";
 import { useAuthStore } from "./store/useAuthStore.ts";
 import ProfilePage from "./pages/ProfilePage.tsx";
 
-import Header from '../src/components/Header.tsx';
+import Sidebar from './components/Sidebar.tsx';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -39,15 +39,17 @@ function App() {
 
     return (
         <>
-            <Header logout={logout} isLoggedIn={authStore.isLoggedIn} profilePic={authStore.authUser.profilePic} />
-            <hr />
-            <Routes>
-                <Route path='/' element={<ChatPage />} />
-                <Route path='/signup' element={<SignUpPage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/profile' element={<ProfilePage />} />
-                <Route path='/complete' element={<CompletePage />} />
-            </Routes>
+            <div className="my-app">
+                <Sidebar logout={logout} isLoggedIn={authStore.isLoggedIn} profilePic={authStore.authUser.profilePic} />
+                <hr />
+                <Routes>
+                    <Route path='/' element={<ChatPage />} />
+                    <Route path='/signup' element={<SignUpPage />} />
+                    <Route path='/login' element={<LoginPage />} />
+                    <Route path='/profile' element={<ProfilePage />} />
+                    <Route path='/complete' element={<CompletePage />} />
+                </Routes>
+            </div>
         </>
     )
 }

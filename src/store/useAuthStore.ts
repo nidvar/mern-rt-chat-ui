@@ -16,6 +16,8 @@ import { create } from 'zustand';
 
 export const useAuthStore = create<AuthStore>(function(set){
     return {
+        allContacts: [],
+        chats: [],
         isLoading: false,
         isLoggedIn: false,
         errorMessage: '',
@@ -33,7 +35,6 @@ export const useAuthStore = create<AuthStore>(function(set){
                 });
                 if(res.ok){
                     const data = await res.json();
-                    console.log(data);
                     set((state)=>{
                         return {
                             isLoggedIn: data.isLoggedIn,
@@ -44,7 +45,6 @@ export const useAuthStore = create<AuthStore>(function(set){
                         }
                     });
                 }else{
-                    console.log(res);
                     if(res.statusText){
                         set({errorMessage: res.statusText});
                     }
