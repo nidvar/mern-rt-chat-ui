@@ -3,17 +3,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from '../store/useChatStore';
 
-import React from "react";
-
-type contactsType = {
-    _id: string
-    username: string
-    email: string
-    profilePic: string
-    createdAt: string
-}
-
-
+import ContactsList from '../components/ContactsList';
 
 const ChatPage = function(){
 
@@ -33,18 +23,8 @@ const ChatPage = function(){
                 <h1>Chat Page</h1>
                 <div>
                     {
-                        chatState.showMembers === true?
-                        <div>
-                            Members: <br />{
-                                chatState.allMembers?.map((item: contactsType)=>{
-                                    return(
-                                        <React.Fragment key={item._id}>
-                                            <button>{item.username}</button><br/>
-                                        </React.Fragment>
-                                    )
-                                })
-                            }
-                        </div>:
+                        chatState.showContacts === true?
+                        <ContactsList allContacts={chatState.allContacts} />:
                         ''
                     }
                     <br />

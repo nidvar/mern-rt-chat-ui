@@ -1,8 +1,8 @@
 type ChatStoreType = {
     allChats: []
-    allMembers: []
+    allContacts: []
     showAllChats: boolean
-    showMembers: boolean
+    showContacts: boolean
     showSingleChat: boolean
     toggleAllChatView: ()=> void
     toggleMemberView: ()=> void
@@ -18,28 +18,28 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 export const useChatStore = create<ChatStoreType>(function(set){
     return {
         allChats: [],
-        allMembers: [],
+        allContacts: [],
         showAllChats: false,
-        showMembers: false,
+        showContacts: false,
         showSingleChat: false,
         toggleAllChatView: () => {
             set({
                 showAllChats: true,
-                showMembers: false,
+                showContacts: false,
                 showSingleChat: false,
             });
         },
         toggleMemberView: () => {
             set({
                 showAllChats: false,
-                showMembers: true,
+                showContacts: true,
                 showSingleChat: false,
             });
         },
         toggleSingleChatView: () => {
             set({
                 showAllChats: false,
-                showMembers: false,
+                showContacts: false,
                 showSingleChat: true,
             });
         },
@@ -49,7 +49,7 @@ export const useChatStore = create<ChatStoreType>(function(set){
             });
             const data = await res.json();
             console.log(data);
-            set({allMembers: data.users})
+            set({allContacts: data.users})
         },
         getAllChats: async ()=>{
             const res = await fetch(baseUrl + '/messages/chats', {
