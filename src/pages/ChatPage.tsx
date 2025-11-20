@@ -57,7 +57,7 @@ const ChatPage = function(){
                         <ContactsList allContacts={chatState.allContacts} />:''
                     }
                     {
-                        chatState.showAllChats?<ChatList allChats={chatState.allChatPartners} />:''
+                        chatState.showAllChats?<ChatList allChatPartners={chatState.allChatPartners} />:''
                     }
                     {
                         chatState.showSingleChat?<ChatContainer messages={messages}/>:''

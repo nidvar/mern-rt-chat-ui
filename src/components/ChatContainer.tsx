@@ -19,7 +19,7 @@ const ChatContainer = ({messages}: ChatPartnerProp)=>{
                 {
                     messages?.map((item)=>{
                         return(
-                            <div>
+                            <div key={item._id}>
                                 <p>{item.text}</p>
                                 <p>{item.createdAt}</p>
                             </div>

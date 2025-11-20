@@ -1,22 +1,31 @@
-type ChatType = {
-    text?: string
-    image?: string
+import { useChatStore } from '../store/useChatStore';
+
+type userType = {
+    _id: string
+    username: string
+    email: string
+    profilePic: string
+    refreshToken: string
+    createdAt: string
+    updatedAt: string
+    __v: 0
 }
 
-type AllChatsType = {
-    allChats: ChatType[]
+type allChatPartnersPropsType = {
+    allChatPartners: userType[]
 }
 
-const ChatList = ({allChats}: AllChatsType)=>{
-    console.log(allChats);
+const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
+    const chatState = useChatStore();
+    console.log(allChatPartners);
     return(
         <>
             <div>
-                {allChats.map((item)=>{
+                {allChatPartners.map((item)=>{
                     return(
-                        <div key={Math.random()}>
-                            {item.text? item.text:''}
-                            {item.image? item.image: ''}
+                        <div key={item._id} onClick={function(){chatState.toggleSingleChatView(item._id)}}>
+                            <img src={item.profilePic} className="profile-image"/>
+                            <p>{item.username}</p>
                         </div>
                     )
                 })}
