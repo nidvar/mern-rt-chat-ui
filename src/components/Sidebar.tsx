@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useChatStore } from '../store/useChatStore';
 
@@ -13,21 +13,29 @@ type SidebarTypes = {
 
 const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
     const chatStore = useChatStore();
+    const navigate = useNavigate();
     return(
         <>
             {
                 isLoggedIn?
                 <div className='sidebar'>
                     <div className='column inner-sidebar'>
-                        <div className='column top-sidebar-nav desktop-nav'>
-                            <Link to='/'>
-                                <button onClick={function(){chatStore.changeView('chats')}
-                                }>Chats</button>
+                        <div className='top-sidebar-nav desktop-nav'>
+                            <Link to='/profile'>
+                                <img src={profilePic || "blank_profile.jpg"} className='profile-image'/>
                             </Link>
-                            <Link to='/'>
-                                <button onClick={function(){chatStore.changeView('contacts')}
-                                }>Contacts</button>
-                            </Link>
+                            <span
+                                className='icons'
+                                onClick={function(){chatStore.changeView('chats'); navigate('/')}}
+                            >
+                                <img src={'chat_icon.png'} />
+                            </span>
+                            <span
+                                className='icons'
+                                onClick={function(){chatStore.changeView('contacts'); navigate('/')}}
+                            >
+                                <img src={'contact_icon.png'} />
+                            </span>
                         </div>
 
                         <div className='desktop-sidebar'>
@@ -39,12 +47,9 @@ const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
                         </div>
 
                     </div>
-                    <div className='column bottom-nav'>
-                        <Link to='/profile'>
-                            <img src={profilePic || "blank_profile.jpg"} className='profile-image'/>
-                        </Link>
-                        <button onClick={logout}>L-OUT</button>
-                    </div>
+                    <span onClick={logout} className='icons'>
+                        <img src={'logout_icon.png'} />
+                    </span>
                 </div>:''
             }
         </>

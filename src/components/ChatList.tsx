@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useChatStore } from '../store/useChatStore';
 
 type userType = {
@@ -16,6 +17,7 @@ type allChatPartnersPropsType = {
 
 const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
     const chatState = useChatStore();
+    const navigate = useNavigate();
     return(
         <>
             <div>
@@ -24,7 +26,7 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
                         <div 
                             className='chats-link'
                             key={item._id}
-                            onClick={function(){chatState.selectChat(item)}}
+                            onClick={function(){chatState.selectChat(item); navigate('/')}}
                         >
                             <img src={item.profilePic} className="profile-image"/>
                             <div>
