@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from '../store/useChatStore';
 
 import ContactsList from '../components/ContactsList';
@@ -20,14 +19,12 @@ type MessageType = {
 }
 
 const ChatPage = function(){
-
-    const authState = useAuthStore();
     const chatState = useChatStore();
 
     const [messages, setMessages] = useState<MessageType[] | null>(null)
 
     const grabChats = async function(){
-        const res = await fetch(baseUrl + '/messages/' + chatState.selectedChatPartner, {
+        const res = await fetch(baseUrl + '/messages/' + chatState.selectedChatPartner?._id, {
             method: 'GET',
             credentials: 'include' as RequestCredentials
         });
@@ -36,17 +33,10 @@ const ChatPage = function(){
     }
 
     useEffect(()=>{
-        if(authState.isLoggedIn === true){
-            chatState.grabContacts();
-            chatState.getChatPartners();
-        };
-    }, [authState.isLoggedIn]);
-
-    useEffect(()=>{
-        if(chatState.selectedChatPartner != ''){
+        if(chatState.selectedChatPartner != null){
             grabChats();
         }
-    }, [chatState.selectedChatPartner])
+    }, [chatState.selectedChatPartner]);
 
     return(
         <div className="chat-page">
@@ -58,13 +48,18 @@ const ChatPage = function(){
             }
             {
                 chatState.showContacts === true?
-                <ContactsList allContacts={chatState.allContacts} />:''
+                <ContactsList allContacts={chatState.allContacts} />
+                :''
             }
             {
-                chatState.showAllChats === true?<ChatList allChatPartners={chatState.allChatPartners} />:''
+                chatState.showAllChats === true?
+                <ChatList allChatPartners={chatState.allChatPartners} />
+                :''
             }
             {
-                chatState.showSingleChat === true?<ChatContainer messages={messages}/>:''
+                chatState.showSingleChat === true?
+                <ChatContainer messages={messages} chatPartner={chatState.selectedChatPartner}/>
+                :''
             }
         </div>
     )

@@ -5,7 +5,6 @@ type userType = {
     username: string
     email: string
     profilePic: string
-    refreshToken: string
     createdAt: string
     updatedAt: string
     __v: 0
@@ -17,7 +16,6 @@ type allChatPartnersPropsType = {
 
 const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
     const chatState = useChatStore();
-    console.log(allChatPartners);
     return(
         <>
             <div>
@@ -26,7 +24,7 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
                         <div 
                             className='chats-link'
                             key={item._id}
-                            onClick={function(){chatState.toggleSingleChatView(item._id)}}
+                            onClick={function(){chatState.toggleSingleChatView(item)}}
                         >
                             <img src={item.profilePic} className="profile-image"/>
                             <div>

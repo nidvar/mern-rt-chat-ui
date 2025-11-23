@@ -1,15 +1,17 @@
 import { useChatStore } from '../store/useChatStore';
 
-type contactsType = {
+type userType = {
     _id: string
     username: string
     email: string
     profilePic: string
     createdAt: string
+    updatedAt: string
+    __v: 0
 }
 
 type contactListProp = {
-    allContacts: contactsType[]
+    allContacts: userType[]
 }
 
 const ContactsList = ({allContacts}: contactListProp)=>{
@@ -18,12 +20,12 @@ const ContactsList = ({allContacts}: contactListProp)=>{
         <>
             <div>
                 {
-                    allContacts.map((item: contactsType)=>{
+                    allContacts.map((item: userType)=>{
                         return(
                             <div 
                                 className="chats-link"
                                 key={item._id} 
-                                onClick={function(){chatState.toggleSingleChatView(item._id)}}
+                                onClick={function(){chatState.toggleSingleChatView(item)}}
                             >
                                 <img src={item.profilePic} className="profile-image"/>
                                 <p>{item.username}</p>

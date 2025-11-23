@@ -2,20 +2,24 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
 
-import SignUpPage from './pages/SignUpPage.tsx';
-import ChatPage from './pages/ChatPage.tsx';
-import LoginPage from './pages/LoginPage.tsx';
-import CompletePage from "./pages/CompletePage.tsx";
+import SignUpPage from './pages/SignUpPage';
+import ChatPage from './pages/ChatPage';
+import LoginPage from './pages/LoginPage';
+import CompletePage from "./pages/CompletePage";
 
-import { useAuthStore } from "./store/useAuthStore.ts";
-import ProfilePage from "./pages/ProfilePage.tsx";
+import { useAuthStore } from "./store/useAuthStore";
+import { useChatStore } from './store/useChatStore';
+import ProfilePage from "./pages/ProfilePage";
 
-import Sidebar from './components/Sidebar.tsx';
+import Sidebar from './components/Sidebar';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 function App() {
+
     const authStore = useAuthStore();
+    const chatState = useChatStore();
+
     const navigate = useNavigate();
 
     const logout = async function(){
@@ -30,6 +34,7 @@ function App() {
                 username: '',
                 email: '',
                 profilePic: '',
+                id:''
             },
         });
          navigate('/login');
@@ -38,6 +43,13 @@ function App() {
     useEffect(()=>{
         authStore.authenticate();
     }, []);
+
+    useEffect(()=>{
+        if(authStore.isLoggedIn === true){
+            chatState.grabContacts();
+            chatState.getChatPartners();
+        };
+    }, [authStore.isLoggedIn]);
 
     return (
         <>

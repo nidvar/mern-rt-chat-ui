@@ -6,6 +6,7 @@ type AuthStore = {
         username: string
         email: string
         profilePic: string
+        id: string
     },
     authenticate: ()=> void
 };
@@ -25,6 +26,7 @@ export const useAuthStore = create<AuthStore>(function(set){
             username: '',
             email: '',
             profilePic:'',
+            id:''
         },
         authenticate: async function(){
             try{
@@ -40,7 +42,8 @@ export const useAuthStore = create<AuthStore>(function(set){
                             isLoggedIn: data.isLoggedIn,
                             authUser: {
                                 ...state.authUser,
-                                profilePic: data.userData.profilePic
+                                profilePic: data.userData.profilePic,
+                                id: data.userData.id
                             }
                         }
                     });

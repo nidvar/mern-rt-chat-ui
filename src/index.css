@@ -35,13 +35,17 @@ textarea {
 }
 
 .top-sidebar-nav {
-    height: 150px;
+    height: 80px;
     justify-content: space-between;
 }
 
 .inner-sidebar {
     height: 85vh;
     justify-content: space-between;
+}
+
+.login-div {
+    margin-bottom: 30px;
 }
 
 /* main block */
@@ -68,7 +72,11 @@ textarea {
 .chat-container-header {
     border-bottom: 1px solid grey;
     width: 100%;
-    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    padding: 5px 10px;
 }
 
 .chat-container-inner {
@@ -82,6 +90,8 @@ textarea {
 
 .chat-box {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .single-message {
@@ -92,11 +102,24 @@ textarea {
     width: 400px;
 }
 
+.user {
+    align-self: flex-end;
+}
+
+.reciever {
+    align-self: flex-start;
+}
+
 .message-input {
     width: 100%;
     display: flex;
     justify-content: space-between;
     gap: 10px;
+}
+
+.message-time {
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* profile page */

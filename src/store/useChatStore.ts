@@ -1,5 +1,5 @@
 type ChatStoreType = {
-    selectedChatPartner: string,
+    selectedChatPartner: ChatPartnerType | null
     allChatPartners: []
     allContacts: []
     showAllChats: boolean
@@ -7,10 +7,20 @@ type ChatStoreType = {
     showSingleChat: boolean
     toggleAllChatView: ()=> void
     toggleMemberView: ()=> void
-    toggleSingleChatView: (id: string)=> void
+    toggleSingleChatView: (chatPartner: ChatPartnerType)=> void
     grabContacts: ()=> void
     getChatPartners: ()=> void
 };
+
+type ChatPartnerType = {
+    _id: string
+    username: string
+    email: string
+    profilePic: string
+    createdAt: string
+    updatedAt: string
+    __v: 0
+}
 
 import { create } from 'zustand';
 
@@ -18,7 +28,7 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const useChatStore = create<ChatStoreType>(function(set){
     return {
-        selectedChatPartner:'',
+        selectedChatPartner: null,
         allChatPartners: [],
         allContacts: [],
         showAllChats: false,
@@ -38,12 +48,12 @@ export const useChatStore = create<ChatStoreType>(function(set){
                 showSingleChat: false,
             });
         },
-        toggleSingleChatView: (id: string) => {
+        toggleSingleChatView: (chatPartner: ChatPartnerType) => {
             set({
                 showAllChats: false,
                 showContacts: false,
                 showSingleChat: true,
-                selectedChatPartner: id
+                selectedChatPartner: chatPartner
             });
         },
         grabContacts: async ()=>{
@@ -59,7 +69,7 @@ export const useChatStore = create<ChatStoreType>(function(set){
                 credentials: 'include'
             });
             const data = await res.json();
-            console.log(data);
+            console.log(111, data);
             set({allChatPartners: data})
         }
     }
