@@ -39,21 +39,13 @@ const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
                         </div>
 
                     </div>
-                    <div className='column'>
+                    <div className='column bottom-nav'>
                         <Link to='/profile'>
                             <img src={profilePic || "blank_profile.jpg"} className='profile-image'/>
                         </Link>
                         <button onClick={logout}>L-OUT</button>
                     </div>
-                </div>:
-                <div className='sidebar'>
-                    <div className='login-div'>
-                        <Link to='/login'>L-IN</Link>
-                    </div>
-                    <div className='logout-div'>
-                        <Link to='/signup'>S-UP</Link>
-                    </div>
-                </div>
+                </div>:''
             }
         </>
     )

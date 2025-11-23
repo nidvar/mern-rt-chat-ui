@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -12,6 +12,8 @@ const LoginPage = function(){
     const [password, setPassword] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
+
+    const authStore = useAuthStore();
 
     const handleSubmit = async function(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -53,37 +55,33 @@ const LoginPage = function(){
         }
     };
 
+    useEffect(()=>{
+        if(authStore.isLoggedIn){
+            navigate("/");
+        }
+    }, [authStore.isLoggedIn])
+
     return (
-        <>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <h1>Login</h1>
-
-                    <input 
-                        type="email"
-                        placeholder='email'
-                        value={email}
-                        onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
-                    />
-
-                    <br />
-                    <br />
-
-                    <input 
-                        type="password"
-                        placeholder='password'
-                        value={password}
-                        onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
-                    />
-
-                    <br />
-                    <br />
-
-                    <button type="submit">LOGIN</button>
-                </form>
-                <p>{errorMessage}</p>
-            </div>
-        </>
+        <div className='form-page'>
+            <form onSubmit={handleSubmit} className='my-form'>
+                <h1>Login</h1>
+                <input 
+                    type="email"
+                    placeholder='email'
+                    value={email}
+                    onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
+                />
+                <input 
+                    type="password"
+                    placeholder='password'
+                    value={password}
+                    onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
+                />
+                <button type="submit">LOGIN</button>
+                <p><Link to='/signup' className='link'>REGISTER</Link></p>
+                <p className='error'>{errorMessage}</p>
+            </form>
+        </div>
     )
 }
 

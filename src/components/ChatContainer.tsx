@@ -56,8 +56,6 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                                                 }
                                         >
                                             <p>{item.text}</p>
-                                            <p>sent by: {item.senderId}</p>
-                                            <p>recieved by: {item.recieverId}</p>
                                             <p className="message-time">{daysAgoLabel(item.createdAt)}</p>
                                         </div>
                                     )

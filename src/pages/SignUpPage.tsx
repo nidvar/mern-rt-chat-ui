@@ -1,11 +1,14 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+
+import { useAuthStore } from '../store/useAuthStore';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const SignUpPage = function(){
 
     const navigate = useNavigate();
+    const authStore = useAuthStore();
 
     const fileInputRef = useRef(null);
 
@@ -79,58 +82,49 @@ const SignUpPage = function(){
         }
     };
 
+    useEffect(()=>{
+        if(authStore.isLoggedIn){
+            navigate("/");
+        }
+    }, [authStore.isLoggedIn])
+
     return(
-        <>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <h1>Register</h1>
-                    <img 
-                        src={image || "blank_profile.jpg"}
-                    />
-                    <br />
-                    <br />
-
-                    <input 
-                        type="file"
-                        accept="image/*"
-                        ref={fileInputRef}
-                        onChange={handleImageUpload}
-                    />
-                    <br />
-                    <br />
-
-                    <input 
-                        type="text"
-                        placeholder='username'
-                        value={username}
-                        onChange={function(e){setUsername(e.target.value); setErrorMessage('')}}
-                    />
-                    <br />
-                    <br />
-
-                    <input 
-                        type="email"
-                        placeholder='email'
-                        value={email}
-                        onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
-                    />
-                    <br />
-                    <br />
-
-                    <input 
-                        type="password"
-                        placeholder='password'
-                        value={password}
-                        onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
-                    />
-                    <br />
-                    <br />
-
-                    <button type="submit" disabled={errorMessage != ''}>REGISTER</button>
-                </form>
-                <p>{errorMessage}</p>
-            </div>
-        </>
+        <div className='form-page'>
+            <form onSubmit={handleSubmit} className='my-form'>
+                <h1>Register</h1>
+                <img 
+                    src={image || "blank_profile.jpg"}
+                    className='register-image'
+                />
+                <input 
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    onChange={handleImageUpload}
+                />
+                <input 
+                    type="text"
+                    placeholder='username'
+                    value={username}
+                    onChange={function(e){setUsername(e.target.value); setErrorMessage('')}}
+                />
+                <input 
+                    type="email"
+                    placeholder='email'
+                    value={email}
+                    onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
+                />
+                <input 
+                    type="password"
+                    placeholder='password'
+                    value={password}
+                    onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
+                />
+                <button type="submit" disabled={errorMessage != ''}>REGISTER</button>
+                <p><Link to='/login' className='link'>BACK TO LOGIN</Link></p>
+                <p className='error'>{errorMessage}</p>
+            </form>
+        </div>
     )
 };
 
