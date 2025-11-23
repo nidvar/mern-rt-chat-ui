@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { useChatStore } from '../store/useChatStore';
 
 import ContactsList from '../components/ContactsList';
@@ -20,25 +21,23 @@ const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
                     <div className='column inner-sidebar'>
                         <div className='column top-sidebar-nav desktop-nav'>
                             <Link to='/'>
-                                <button onClick={function(){chatStore.toggleAllChatView()}}>Chats</button>
+                                <button onClick={function(){chatStore.changeView('chats')}
+                                }>Chats</button>
                             </Link>
                             <Link to='/'>
-                                <button onClick={function(){chatStore.toggleMemberView()}}>Contacts</button>
+                                <button onClick={function(){chatStore.changeView('contacts')}
+                                }>Contacts</button>
                             </Link>
                         </div>
 
                         <div className='desktop-sidebar'>
                             {
-                                chatStore.showContacts === true?
-                                <ContactsList allContacts={chatStore.allContacts} />
-                                :''
-                            }
-                            {
-                                chatStore.showAllChats === true?
+                                chatStore.view === 'chats'?
                                 <ChatList allChatPartners={chatStore.allChatPartners} />
-                                :''
+                                :<ContactsList allContacts={chatStore.allContacts} />
                             }
                         </div>
+
                     </div>
                     <div className='column'>
                         <Link to='/profile'>

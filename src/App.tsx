@@ -6,7 +6,6 @@ import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CompletePage from "./pages/CompletePage";
-import ChatPage from "./pages/ChatPage";
 
 import { useAuthStore } from "./store/useAuthStore";
 import { useChatStore } from './store/useChatStore';
@@ -61,7 +60,6 @@ function App() {
                     <div className="main-view">
                         <Routes>
                             <Route path='/' element={<HomePage />} />
-                            <Route path='/chat' element={<ChatPage />} />
                             <Route path='/signup' element={<SignUpPage />} />
                             <Route path='/login' element={<LoginPage />} />
                             <Route path='/profile' element={<ProfilePage />} />

@@ -31,43 +31,47 @@ type Message = {
 
 const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
     const authStore = useAuthStore();
-    console.log(chatPartner)
     return(
         <div className="chat-container column">
-            <div className="chat-container-header">
-                <Link to='/profile'>
-                    <img src={chatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'/>
-                </Link>
-                {chatPartner?.username} 
-            </div>
-            <div className="chat-container-inner">
-                <div className="chat-box">
-                    {
-                        messages?.map((item)=>{
-                            return(
-                                <div 
-                                    key={item._id} 
-                                    className={
-                                        authStore.authUser.id === item.senderId?
-                                            'single-message user':
-                                            'single-message reciever'
-                                        }
-                                >
-                                    <p>{item.text}</p>
-                                    <p>sent by: {item.senderId}</p>
-                                    <p>recieved by: {item.recieverId}</p>
-                                    <p className="message-time">{daysAgoLabel(item.createdAt)}</p>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <div className="message-input">
-                    <textarea>
-                    </textarea>
-                    <button>SEND</button>
-                </div>
-            </div>
+            {
+                chatPartner?
+                <>
+                    <div className="chat-container-header">
+                        <Link to='/profile'>
+                            <img src={chatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'/>
+                        </Link>
+                        {chatPartner?.username} 
+                    </div>
+                    <div className="chat-container-inner">
+                        <div className="chat-box">
+                            {
+                                messages?.map((item)=>{
+                                    return(
+                                        <div 
+                                            key={item._id} 
+                                            className={
+                                                authStore.authUser.id === item.senderId?
+                                                    'single-message user':
+                                                    'single-message reciever'
+                                                }
+                                        >
+                                            <p>{item.text}</p>
+                                            <p>sent by: {item.senderId}</p>
+                                            <p>recieved by: {item.recieverId}</p>
+                                            <p className="message-time">{daysAgoLabel(item.createdAt)}</p>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className="message-input">
+                            <textarea>
+                            </textarea>
+                            <button>SEND</button>
+                        </div>
+                    </div>
+                </>:''
+            }
         </div>
     )
 };

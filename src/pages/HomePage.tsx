@@ -19,12 +19,12 @@ type MessageType = {
 }
 
 const HomePage = function(){
-    const chatState = useChatStore();
+    const chatStore = useChatStore();
 
-    const [messages, setMessages] = useState<MessageType[] | null>(null)
+    const [messages, setMessages] = useState<MessageType[] | null>(null);
 
     const grabChats = async function(){
-        const res = await fetch(baseUrl + '/messages/' + chatState.selectedChatPartner?._id, {
+        const res = await fetch(baseUrl + '/messages/' + chatStore.selectedChatPartner?._id, {
             method: 'GET',
             credentials: 'include' as RequestCredentials
         });
@@ -33,36 +33,37 @@ const HomePage = function(){
     }
 
     useEffect(()=>{
-        if(chatState.selectedChatPartner != null){
+        if(chatStore.selectedChatPartner != null){
             grabChats();
         }
-    }, [chatState.selectedChatPartner]);
+    }, [chatStore.selectedChatPartner]);
 
     return(
         <div className="chat-page">
             {
-                chatState.showContacts === false &&
-                chatState.showAllChats === false &&
-                chatState.showSingleChat === false?
-                <h1>Chat app</h1>: ''
-            }
-            <div className="mobile">
-                {
-                    chatState.showContacts === true?
-                    <ContactsList allContacts={chatState.allContacts} />
-                    :''
-                }
-                {
-                    chatState.showAllChats === true?
-                    <ChatList allChatPartners={chatState.allChatPartners} />
-                    :''
-                }
-            </div>
-
-            {
-                chatState.showSingleChat === true?
-                <ChatContainer messages={messages} chatPartner={chatState.selectedChatPartner}/>
-                :''
+                window.innerWidth < 700?
+                <>
+                    {
+                        chatStore.selectedChatPartner && chatStore.view === '' ? 
+                        <ChatContainer messages={messages} chatPartner={chatStore.selectedChatPartner} />:
+                        <>
+                            {
+                                chatStore.view === 'chats'?
+                                <ChatList allChatPartners={chatStore.allChatPartners} />:
+                                <ContactsList allContacts={chatStore.allContacts} />
+                            }
+                        </>
+                    }
+                </>
+                :
+                <>
+                    <ChatContainer messages={messages} chatPartner={chatStore.selectedChatPartner} />
+                    {
+                        chatStore.view === 'chats'?
+                        <ChatList allChatPartners={chatStore.allChatPartners} />:
+                        <ContactsList allContacts={chatStore.allContacts} />
+                    }
+                </>
             }
         </div>
     )
