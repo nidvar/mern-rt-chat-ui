@@ -17,24 +17,22 @@ type contactListProp = {
 const ContactsList = ({allContacts}: contactListProp)=>{
     const chatState = useChatStore();
     return(
-        <>
-            <div>
-                {
-                    allContacts.map((item: userType)=>{
-                        return(
-                            <div 
-                                className="chats-link"
-                                key={item._id} 
-                                onClick={function(){chatState.selectChat(item)}}
-                            >
-                                <img src={item.profilePic} className="profile-image"/>
-                                <p>{item.username}</p>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        </>
+        <div>
+            {
+                allContacts.map((item: userType)=>{
+                    return(
+                        <div 
+                            className="chats-link"
+                            key={item._id} 
+                            onClick={function(){chatState.selectChat(item)}}
+                        >
+                            <img src={item.profilePic} className="profile-image"/>
+                            <p>{item.username}</p>
+                        </div>
+                    )
+                })
+            }
+        </div>
     )
 };
 

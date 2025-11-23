@@ -176,10 +176,6 @@ textarea {
     display: none;
 }
 
-.mobile {
-    background-color: pink;
-}
-
 @media (min-width: 700px) {
     .sidebar {
         width: 400px;
@@ -199,7 +195,6 @@ textarea {
     }
 
     .sidebar {
-        background-color: wheat;
         height: 100%;
         min-width: 60px;
         display: flex;
@@ -209,13 +204,11 @@ textarea {
     }
 
     .top-sidebar-nav {
-        background-color: yellow;
         height: 40px;
         justify-content: space-between;
     }
 
     .inner-sidebar {
-        background-color: lightgreen;
         width: 100%;
         max-height: 85vh;
         justify-content: flex-start;

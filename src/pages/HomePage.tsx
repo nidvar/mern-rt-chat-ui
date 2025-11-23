@@ -57,11 +57,10 @@ const HomePage = function(){
                 </>
                 :
                 <>
-                    <ChatContainer messages={messages} chatPartner={chatStore.selectedChatPartner} />
                     {
-                        chatStore.view === 'chats'?
-                        <ChatList allChatPartners={chatStore.allChatPartners} />:
-                        <ContactsList allContacts={chatStore.allContacts} />
+                        chatStore.selectedChatPartner? 
+                        <ChatContainer messages={messages} chatPartner={chatStore.selectedChatPartner} />:
+                        ''
                     }
                 </>
             }
