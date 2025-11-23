@@ -38,21 +38,16 @@ export const useChatStore = create<ChatStoreType>(function(set){
             set({
                 showAllChats: true,
                 showContacts: false,
-                showSingleChat: false,
             });
         },
         toggleMemberView: () => {
             set({
                 showAllChats: false,
                 showContacts: true,
-                showSingleChat: false,
             });
         },
         toggleSingleChatView: (chatPartner: ChatPartnerType) => {
             set({
-                showAllChats: false,
-                showContacts: false,
-                showSingleChat: true,
                 selectedChatPartner: chatPartner
             });
         },
@@ -69,7 +64,6 @@ export const useChatStore = create<ChatStoreType>(function(set){
                 credentials: 'include'
             });
             const data = await res.json();
-            console.log(111, data);
             set({allChatPartners: data})
         }
     }

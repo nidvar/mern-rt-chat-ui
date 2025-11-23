@@ -3,15 +3,17 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import SignUpPage from './pages/SignUpPage';
-import ChatPage from './pages/ChatPage';
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CompletePage from "./pages/CompletePage";
+import ChatPage from "./pages/ChatPage";
 
 import { useAuthStore } from "./store/useAuthStore";
 import { useChatStore } from './store/useChatStore';
 import ProfilePage from "./pages/ProfilePage";
 
 import Sidebar from './components/Sidebar';
+
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -58,7 +60,8 @@ function App() {
                     <Sidebar logout={logout} isLoggedIn={authStore.isLoggedIn} profilePic={authStore.authUser.profilePic} />
                     <div className="main-view">
                         <Routes>
-                            <Route path='/' element={<ChatPage />} />
+                            <Route path='/' element={<HomePage />} />
+                            <Route path='/chat' element={<ChatPage />} />
                             <Route path='/signup' element={<SignUpPage />} />
                             <Route path='/login' element={<LoginPage />} />
                             <Route path='/profile' element={<ProfilePage />} />

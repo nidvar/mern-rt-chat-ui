@@ -1,12 +1,27 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
 
-import { useChatStore } from '../store/useChatStore';
+import { useAuthStore } from "../store/useAuthStore";
+import { useChatStore } from "../store/useChatStore";
 
-import ContactsList from '../components/ContactsList';
-import ChatContainer from "../components/ChatContainer";
-import ChatList from "../components/ChatList";
+import { daysAgoLabel } from "../utils/utils"
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+// type ChatPartnerType = {
+//     _id: string
+//     username: string
+//     email: string
+//     profilePic: string
+//     createdAt: string
+//     updatedAt: string
+//     __v: 0
+// }
+
+// type ChatPartnerProp = {
+//     messages: Message[] | null
+//     chatPartner: ChatPartnerType | null
+// }
 
 type MessageType = {
     _id: string
@@ -18,10 +33,13 @@ type MessageType = {
     __v: 0
 }
 
-const ChatPage = function(){
-    const chatState = useChatStore();
+const ChatPage = ()=>{
 
     const [messages, setMessages] = useState<MessageType[] | null>(null)
+    
+    const authStore = useAuthStore();
+    const chatState = useChatStore();
+
 
     const grabChats = async function(){
         const res = await fetch(baseUrl + '/messages/' + chatState.selectedChatPartner?._id, {
@@ -39,28 +57,41 @@ const ChatPage = function(){
     }, [chatState.selectedChatPartner]);
 
     return(
-        <div className="chat-page">
-            {
-                chatState.showContacts === false &&
-                chatState.showAllChats === false &&
-                chatState.showSingleChat === false?
-                <h1>Chat app</h1>: ''
-            }
-            {
-                chatState.showContacts === true?
-                <ContactsList allContacts={chatState.allContacts} />
-                :''
-            }
-            {
-                chatState.showAllChats === true?
-                <ChatList allChatPartners={chatState.allChatPartners} />
-                :''
-            }
-            {
-                chatState.showSingleChat === true?
-                <ChatContainer messages={messages} chatPartner={chatState.selectedChatPartner}/>
-                :''
-            }
+        <div className="chat-container column">
+            <div className="chat-container-header">
+                <Link to='/profile'>
+                    <img src={chatState.selectedChatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'/>
+                </Link>
+                {chatState.selectedChatPartner?.username} 
+            </div>
+            <div className="chat-container-inner">
+                <div className="chat-box">
+                    {
+                        messages?.map((item)=>{
+                            return(
+                                <div 
+                                    key={item._id} 
+                                    className={
+                                        authStore.authUser.id === item.senderId?
+                                            'single-message user':
+                                            'single-message reciever'
+                                        }
+                                >
+                                    <p>{item.text}</p>
+                                    <p>sent by: {item.senderId}</p>
+                                    <p>recieved by: {item.recieverId}</p>
+                                    <p className="message-time">{daysAgoLabel(item.createdAt)}</p>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <div className="message-input">
+                    <textarea>
+                    </textarea>
+                    <button>SEND</button>
+                </div>
+            </div>
         </div>
     )
 };
