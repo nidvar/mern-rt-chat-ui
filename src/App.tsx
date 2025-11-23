@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import CompletePage from "./pages/CompletePage";
+import CompletePage from './pages/CompletePage';
 
 import { useAuthStore } from "./store/useAuthStore";
 import { useChatStore } from './store/useChatStore';
@@ -38,7 +38,7 @@ function App() {
                 id:''
             },
         });
-         navigate('/login');
+        navigate('/login');
     }
 
     useEffect(()=>{
@@ -49,7 +49,9 @@ function App() {
         if(authStore.isLoggedIn === true){
             chatState.grabContacts();
             chatState.getChatPartners();
-        };
+        }else{
+            navigate('/login');
+        }
     }, [authStore.isLoggedIn]);
 
     return (
