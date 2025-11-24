@@ -173,7 +173,7 @@ input {
     border: 1px solid grey;
     border-radius: 6px;
     padding: 5px 15px 5px 15px;
-    max-width: 400px;
+    max-width: 200px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -198,7 +198,7 @@ input {
     justify-content: flex-end;
     margin: 10px 0 0 0;
     font-size: 14px;
-    min-width: 220px;
+    min-width: 120px;
 }
 
 /* profile page */
@@ -231,8 +231,8 @@ input {
 }
 
 .profile-image {
-    width:40px;
-    height:40px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -263,7 +263,7 @@ input {
     color: red;
 }
 
-.icons img{
+.icons img {
     max-width: 25px;
     max-height: 25px;
     cursor: pointer;
@@ -276,6 +276,11 @@ input {
 }
 
 @media (min-width: 700px) {
+
+    .single-message {
+        max-width: 350px;
+    }
+
     .sidebar {
         width: 400px;
     }
