@@ -20,7 +20,7 @@ const ContactsList = ({allContacts}: contactListProp)=>{
     const chatState = useChatStore();
     const navigate = useNavigate();
     return(
-        <div>
+        <>
             {
                 allContacts.map((item: userType)=>{
                     return(
@@ -35,7 +35,7 @@ const ContactsList = ({allContacts}: contactListProp)=>{
                     )
                 })
             }
-        </div>
+        </>
     )
 };
 

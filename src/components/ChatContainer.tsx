@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -35,6 +35,8 @@ type Message = {
 const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
     const authStore = useAuthStore();
 
+    const chatBoxRef = useRef<HTMLDivElement | null>(null);
+
     const [message, setMessage] = useState('');
 
     const handleSubmit = async (e: { preventDefault: () => void; })=>{
@@ -51,8 +53,14 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
         setMessage('');
         const data = await res.json();
         console.log(data);
-    }
-    
+    };
+
+    useEffect(()=>{
+        const el = chatBoxRef.current;
+        if (!el) return;
+        el.scrollTop = el.scrollHeight;
+    }, [messages]);
+
     return(
         <div className="chat-container column">
             {
@@ -64,27 +72,26 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                         </Link>
                         {chatPartner?.username} 
                     </div>
-                    <div className="chat-container-inner">
-                        <div className="chat-box">
-                            {
-                                messages?.map((item)=>{
-                                    return(
-                                        <div 
-                                            key={item._id} 
-                                            className={
-                                                authStore.authUser.id === item.senderId?
-                                                    'single-message user':
-                                                    'single-message reciever'
-                                                }
-                                        >
-                                            <p>{item.text}</p>
-                                            <p className="message-time">{daysAgoLabel(item.createdAt)}</p>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                        <div className="message-input">
+                    <div className="chat-box" ref={chatBoxRef}>
+                        {
+                            messages?.map((item)=>{
+                                return(
+                                    <div 
+                                        key={item._id} 
+                                        className={
+                                            authStore.authUser.id === item.senderId?
+                                                'single-message user':
+                                                'single-message reciever'
+                                            }
+                                    >
+                                        <p>{item.text}</p>
+                                        <p className="message-time">{daysAgoLabel(item.createdAt)}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className="message-input">
                             <form onSubmit={function(e){handleSubmit(e)}}>
                                 <input
                                     value={message}
@@ -93,7 +100,6 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                                 <button>SEND</button>
                             </form>
                         </div>
-                    </div>
                 </>:''
             }
         </div>

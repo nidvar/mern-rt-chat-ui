@@ -20,23 +20,21 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
     const navigate = useNavigate();
     return(
         <>
-            <div>
-                {allChatPartners.map((item)=>{
-                    return(
-                        <div 
-                            className='chats-link'
-                            key={item._id}
-                            onClick={function(){chatState.selectChat(item); navigate('/')}}
-                        >
-                            <img src={item.profilePic} className="profile-image"/>
-                            <div>
-                                <p>{item.username}</p>
-                                <p>.....</p>
-                            </div>
+            {allChatPartners.map((item)=>{
+                return(
+                    <div 
+                        className='chats-link'
+                        key={item._id}
+                        onClick={function(){chatState.selectChat(item); navigate('/')}}
+                    >
+                        <img src={item.profilePic} className="profile-image"/>
+                        <div>
+                            <p>{item.username}</p>
+                            <p>.....</p>
                         </div>
-                    )
-                })}
-            </div>
+                    </div>
+                )
+            })}
         </>
     )
 };
