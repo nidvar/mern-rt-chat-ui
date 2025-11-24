@@ -34,7 +34,7 @@ input {
 }
 
 .background {
-    background-image: url('/background.jpg');
+    background-image: url('/chat-background.jpg');
     background-color: rgba(255, 255, 255, 0.5);
     background-blend-mode: lighten;
 }
@@ -97,6 +97,8 @@ input {
     padding: 10px;
     height: 100vh;
     background-image: url('/app-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .my-app-container {
@@ -104,9 +106,8 @@ input {
     border-radius: 8px;
     display: flex;
     height: 100%;
-    border: 1px solid grey;
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* sidebar */
