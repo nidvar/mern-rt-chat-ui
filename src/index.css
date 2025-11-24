@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+form {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
 textarea {
     width: 100%;
     resize: none;
@@ -192,6 +198,11 @@ input {
     justify-content: space-between;
     gap: 10px;
 }
+
+.message-input, input {
+    width: 100%;
+}
+
 
 .message-time {
     display: flex;

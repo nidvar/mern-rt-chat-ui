@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import { useAuthStore } from "../store/useAuthStore";
 
-import { daysAgoLabel } from "../utils/utils"
+import { daysAgoLabel } from "../utils/utils";
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 type ChatPartnerType = {
     _id: string
@@ -31,6 +34,25 @@ type Message = {
 
 const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
     const authStore = useAuthStore();
+
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e: { preventDefault: () => void; })=>{
+        e.preventDefault();
+        const payload = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify({message: message}),
+            credentials: 'include' as RequestCredentials
+        };
+        const res = await fetch(baseURL + '/messages/send/' + chatPartner?._id, payload);
+        setMessage('');
+        const data = await res.json();
+        console.log(data);
+    }
+    
     return(
         <div className="chat-container column">
             {
@@ -63,9 +85,13 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                             }
                         </div>
                         <div className="message-input">
-                            <textarea>
-                            </textarea>
-                            <button>SEND</button>
+                            <form onSubmit={function(e){handleSubmit(e)}}>
+                                <input
+                                    value={message}
+                                    onChange={function(e){setMessage(e.target.value);}}
+                                />
+                                <button>SEND</button>
+                            </form>
                         </div>
                     </div>
                 </>:''
