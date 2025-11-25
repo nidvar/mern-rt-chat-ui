@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 import { useChatStore } from '../store/useChatStore';
 
@@ -20,6 +21,8 @@ type MessageType = {
 }
 
 const HomePage = function(){
+    const navigate = useNavigate();
+
     const chatStore = useChatStore();
     const authStore = useAuthStore();
 
@@ -30,6 +33,28 @@ const HomePage = function(){
             credentials: 'include' as RequestCredentials
         });
         setMessages(apiData);
+    }
+
+    const logout = async function(){
+        const payload = {
+            method: 'POST',
+            credentials: 'include' as RequestCredentials
+        };
+        const result = await apiRequest('/auth/logout', payload);
+        if(result){
+            useAuthStore.setState({
+                isLoggedIn: false,
+                authUser: {
+                    username: '',
+                    email: '',
+                    profilePic: '',
+                    id:'',
+                    createdAt: '',
+                    lastLoggedIn: ''
+                },
+            });
+            navigate('/login');
+        }
     }
 
     useEffect(()=>{
@@ -50,11 +75,7 @@ const HomePage = function(){
                             <MobileHeader
                                 profilePic={authStore.authUser.profilePic} 
                                 id={authStore.authUser.id} 
-                                logout={
-                                    function (): void {
-                                        throw new Error("Function not implemented.");
-                                    }
-                                }
+                                logout={logout}
                             />
                             {
                                 chatStore.view === 'chats'?
