@@ -260,16 +260,9 @@ a {
 .profile-section {
     display: flex;
     flex-direction: column;
-    text-align: center;
     gap: 20px;
-
-    height: 500px;
     max-width: 600px;
-
     padding: 30px;
-
-
-
     background-color: white;
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -279,6 +272,10 @@ a {
     height: 200px;
     width: 200px;
     border-radius: 50%;
+}
+
+.member-description p {
+    margin: 10px;
 }
 
 /* utilities */
@@ -341,10 +338,19 @@ a {
     margin: 10px;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 @media (min-width: 700px) {
 
     .my-app {
-        padding: 60px 120px;
+        padding: 30px;
+    }
+
+    .my-app-container {
+        max-width: 1200px;
+        margin: auto;
     }
 
     .single-message {

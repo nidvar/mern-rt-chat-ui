@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from '../store/useChatStore';
+import { readableDate } from '../utils/utils';
 
 type userType = {
     id?: string
@@ -69,9 +70,12 @@ const ProfilePage = function(){
                     <button onClick={updateProfile}>UPDATE</button>:
                     ''
                 }
-                <p>Username: {currentUser?.username}</p>
-                <p>Member since: {currentUser?.createdAt}</p>
-                <p>Last logged in: {}</p>
+                <div className='member-description'>
+                    <p><span className='bold'>Username:</span> {currentUser?.username}</p>
+                    <p><span className='bold'>Member since:</span> {readableDate(currentUser?.createdAt)}</p>
+                    <p><span className='bold'>Last logged in:</span> {}</p>
+                </div>
+                
                 <Link to='/'>BACK</Link>
             </div>
         </div>
