@@ -57,7 +57,7 @@ const ProfilePage = function(){
                 }
             }
         }
-    }, [chatStore.allContacts])
+    }, [params])
 
     return(
         <div className='profile-page'>
