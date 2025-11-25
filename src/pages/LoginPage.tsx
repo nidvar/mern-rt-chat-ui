@@ -38,7 +38,6 @@ const LoginPage = function(){
             const res = await fetch(baseURL + '/auth/login', payload);
             if(res.ok){
                 const data = await res.json();
-                console.log(data);
 
                 useAuthStore.setState({
                     isLoggedIn: true,

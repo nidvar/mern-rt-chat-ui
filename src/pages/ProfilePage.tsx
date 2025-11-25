@@ -45,7 +45,6 @@ const ProfilePage = function(){
     useEffect(()=>{
         if(params.id){
             if(params.id === authState.authUser.id){
-                console.log(authState.authUser);
                 setCurrentUser(authState.authUser);
             }else{
                 const user = chatStore.allContacts.find((item: userType)=>{

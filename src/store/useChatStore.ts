@@ -40,7 +40,6 @@ export const useChatStore = create<ChatStoreType>(function(set){
                 credentials: 'include'
             });
             const data = await res.json();
-            console.log(data);
             set({allContacts: data.users})
         },
         getChatPartners: async ()=>{
@@ -51,7 +50,6 @@ export const useChatStore = create<ChatStoreType>(function(set){
             set({allChatPartners: data})
         },
         changeView: function(view: string){
-            console.log(view);
             set({view: view});
         }
     }

@@ -32,7 +32,6 @@ const HomePage = function(){
             credentials: 'include' as RequestCredentials
         });
         const data = await res.json();
-        console.log(data);
         setMessages(data);
     }
 
