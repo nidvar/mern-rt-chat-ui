@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuthStore } from "../store/useAuthStore";
 
 import { daysAgoLabel } from "../utils/utils";
+import { useChatStore } from '../store/useChatStore';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -34,6 +35,7 @@ type Message = {
 
 const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
     const authStore = useAuthStore();
+    const chatStore = useChatStore();
 
     const chatBoxRef = useRef<HTMLDivElement | null>(null);
 
@@ -67,6 +69,14 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                 chatPartner?
                 <>
                     <div className="chat-container-header">
+                        <div className='mobile-back-container'>
+                            <span className='icons mobile-back' >
+                                <img 
+                                    src={'go-back.png'} 
+                                    onClick={function(){chatStore.changeView('contacts')}}
+                                />
+                            </span>
+                        </div>
                         <Link to={"/profile/" + chatPartner?._id}>
                             <img 
                                 src={chatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'

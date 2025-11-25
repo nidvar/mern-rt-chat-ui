@@ -43,7 +43,7 @@ export const useAuthStore = create<AuthStore>(function(set){
                             authUser: {
                                 ...state.authUser,
                                 profilePic: data.userData.profilePic,
-                                id: data.userData.id
+                                id: data.userData._id
                             }
                         }
                     });

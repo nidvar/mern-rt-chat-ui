@@ -51,6 +51,30 @@ a {
     color: white;
 }
 
+/* sidebar */
+
+.sidebar {
+    display: none;
+}
+
+/* mobile header */
+
+.mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+    padding: 5px 15px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-back-container {
+    display: flex;
+    align-items: center;
+}
+
 /* form page */
 
 .form-page {
@@ -113,35 +137,6 @@ a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* sidebar */
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    height: 100%;
-    min-width: 60px;
-    padding: 0 5px 20px 5px;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
-    margin-right:1px;
-}
-
-.inner-sidebar {
-    height: 85vh;
-    justify-content: space-between;
-}
-
-.top-sidebar-nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.login-div {
-    margin-bottom: 30px;
-}
 
 /* main block */
 
@@ -166,7 +161,7 @@ a {
 
 .chat-container-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
     padding: 12px 30px;
     background-color: white;
@@ -179,7 +174,7 @@ a {
     align-items: center;
     gap: 10px;
     color: inherit;
-    font-weight: bold
+    font-weight: bold;
 }
 
 .chat-box {
@@ -374,19 +369,33 @@ a {
         display: block;
     }
 
+    /* sidebar */
+
     .sidebar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        height: 100%;
+        min-width: 60px;
         padding: 0 0 20px 0;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+        margin-right:1px;
     }
 
     .inner-sidebar {
+        height: 85vh;
         width: 100%;
-        max-height: 85vh;
         justify-content: flex-start;
     }
 
     .top-sidebar-nav {
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        gap: 20px;
         width: 100%;
         padding: 10px 15px;
         margin:0;
@@ -412,6 +421,19 @@ a {
     .profile-section {
         align-items: center;
         width: 400px;
+    }
+
+    .login-div {
+        margin-bottom: 30px;
+    }
+
+    /* mobile header */
+    .mobile-header {
+        display: none;
+    }
+
+    .mobile-back {
+        display: none;
     }
 
 }

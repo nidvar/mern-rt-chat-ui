@@ -5,6 +5,8 @@ import { useChatStore } from '../store/useChatStore';
 import ContactsList from '../components/ContactsList';
 import ChatContainer from "../components/ChatContainer";
 import ChatList from "../components/ChatList";
+import MobileHeader from "../components/MobileHeader";
+import { useAuthStore } from "../store/useAuthStore";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -20,6 +22,7 @@ type MessageType = {
 
 const HomePage = function(){
     const chatStore = useChatStore();
+    const authStore = useAuthStore();
 
     const [messages, setMessages] = useState<MessageType[] | null>(null);
 
@@ -29,6 +32,7 @@ const HomePage = function(){
             credentials: 'include' as RequestCredentials
         });
         const data = await res.json();
+        console.log(data);
         setMessages(data);
     }
 
@@ -44,9 +48,18 @@ const HomePage = function(){
                 window.innerWidth < 700?
                 <>
                     {
-                        chatStore.selectedChatPartner && chatStore.view === '' ? 
+                        chatStore.selectedChatPartner && chatStore.view === '' ?
                         <ChatContainer messages={messages} chatPartner={chatStore.selectedChatPartner} />:
                         <>
+                            <MobileHeader
+                                profilePic={authStore.authUser.profilePic} 
+                                id={authStore.authUser.id} 
+                                logout={
+                                    function (): void {
+                                        throw new Error("Function not implemented.");
+                                    }
+                                }
+                            />
                             {
                                 chatStore.view === 'chats'?
                                 <ChatList allChatPartners={chatStore.allChatPartners} />:
