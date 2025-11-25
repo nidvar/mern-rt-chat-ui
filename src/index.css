@@ -166,8 +166,9 @@ input {
     justify-content: flex-end;
     width: 100%;
     padding: 12px 30px;
-    background-color: rgb(245, 245, 245);
+    background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3px;
 }
 
 .chat-container-header a {
@@ -195,7 +196,7 @@ input {
     width: 100%;
     gap: 10px;
     padding: 20px 10px;
-    background-color: rgb(245, 245, 245);
+    background-color: white;
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -350,7 +351,6 @@ input {
         width: 100%;
         padding: 10px 15px;
         margin:0;
-        background-color: rgb(245, 245, 245);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
