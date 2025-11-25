@@ -8,10 +8,11 @@ import ChatList from "../components/ChatList";
 type SidebarTypes = {
     isLoggedIn: boolean
     profilePic: string
+    id: string
     logout: ()=> void
 };
 
-const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
+const Sidebar = function({logout, isLoggedIn, profilePic, id}: SidebarTypes){
     const chatStore = useChatStore();
     const navigate = useNavigate();
     return(
@@ -21,7 +22,7 @@ const Sidebar = function({logout, isLoggedIn, profilePic}: SidebarTypes){
                 <div className='sidebar'>
                     <div className='column inner-sidebar'>
                         <div className='top-sidebar-nav desktop-nav'>
-                            <Link to='/profile'>
+                            <Link to={'profile/' + id}>
                                 <img src={profilePic || "blank_profile.jpg"} className='profile-image'/>
                             </Link>
                             <span

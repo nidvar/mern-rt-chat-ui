@@ -58,14 +58,19 @@ function App() {
         <>
             <div className="my-app">
                 <div className="my-app-container">
-                    <Sidebar logout={logout} isLoggedIn={authStore.isLoggedIn} profilePic={authStore.authUser.profilePic} />
+                    <Sidebar 
+                        logout={logout} 
+                        isLoggedIn={authStore.isLoggedIn} 
+                        profilePic={authStore.authUser.profilePic} 
+                        id={authStore.authUser.id}
+                    />
                     <div className="main-view background">
                         <Routes>
                             <Route path='/' element={<HomePage />} />
                             <Route path='/signup' element={<SignUpPage />} />
                             <Route path='/login' element={<LoginPage />} />
-                            <Route path='/profile' element={<ProfilePage />} />
                             <Route path='/complete' element={<CompletePage />} />
+                            <Route path='/profile/:id' element={<ProfilePage />} />
                         </Routes>
                     </div>
                 </div>

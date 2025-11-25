@@ -19,7 +19,7 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
     const chatState = useChatStore();
     const navigate = useNavigate();
     return(
-        <>
+        <div className='chat-list'>
             {allChatPartners.map((item)=>{
                 return(
                     <div 
@@ -35,7 +35,7 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
                     </div>
                 )
             })}
-        </>
+        </div>
     )
 };
 

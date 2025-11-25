@@ -67,7 +67,7 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                 chatPartner?
                 <>
                     <div className="chat-container-header">
-                        <Link to='/profile'>
+                        <Link to={"/profile/" + chatPartner?._id}>
                             <img 
                                 src={chatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'
                             />

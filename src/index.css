@@ -33,6 +33,10 @@ input {
     border: 1px solid grey;
 }
 
+a {
+    text-decoration: none;
+}
+
 .background {
     background-image: url('/chat-background.jpg');
     background-color: rgba(255, 255, 255, 0.5);
@@ -45,7 +49,6 @@ input {
     border-radius: 6px;
     background-color: #0d6efd;
     color: white;
-    text-decoration: none;
 }
 
 /* form page */
@@ -175,7 +178,6 @@ input {
     display: flex;
     align-items: center;
     gap: 10px;
-    text-decoration: none;
     color: inherit;
     font-weight: bold
 }
@@ -230,15 +232,47 @@ input {
     min-width: 120px;
 }
 
+/* contacts / chat -container */
+
+.contacts-list {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 5px;
+}
+
+.chat-list {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 5px;
+}
+
 /* profile page */
 
 .profile-page {
     height: 100%;
-    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-section {
     display: flex;
     flex-direction: column;
+    text-align: center;
     gap: 20px;
-    align-items: center;
+
+    height: 500px;
+    max-width: 600px;
+
+    padding: 30px;
+
+
+
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .profile-page-image {
@@ -289,7 +323,6 @@ input {
 
 .link {
     color: #1E90FF;
-    text-decoration: none;
 }
 
 .error {
@@ -357,4 +390,22 @@ input {
     .login-div {
         margin-bottom: 30px;
     }
+
+    .contacts-list {
+        background-color: inherit;
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .chat-list {
+        background-color: inherit;
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .profile-section {
+        align-items: center;
+        width: 400px;
+    }
+
 }
