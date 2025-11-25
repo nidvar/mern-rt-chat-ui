@@ -3,10 +3,8 @@ import { useState, useRef, useEffect } from 'react';
 
 import { useAuthStore } from "../store/useAuthStore";
 
-import { daysAgoLabel } from "../utils/utils";
+import { daysAgoLabel, apiRequest } from "../utils/utils";
 import { useChatStore } from '../store/useChatStore';
-
-const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 type ChatPartnerType = {
     _id: string
@@ -46,15 +44,14 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
         const payload = {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json',
+                'content-type': 'application/json',
             },
             body: JSON.stringify({message: message}),
             credentials: 'include' as RequestCredentials
         };
-        const res = await fetch(baseURL + '/messages/send/' + chatPartner?._id, payload);
+        const result = await apiRequest('/messages/send/' + chatPartner?._id, payload);
+        console.log(result);
         setMessage('');
-        const data = await res.json();
-        console.log(data);
     };
 
     useEffect(()=>{

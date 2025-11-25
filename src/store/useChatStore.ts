@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { apiRequest } from '../utils/utils';
 
 type ChatStoreType = {
     view: string
@@ -21,8 +22,6 @@ type ChatPartnerType = {
     __v: 0
 }
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
 export const useChatStore = create<ChatStoreType>(function(set){
     return {
         view: '',
@@ -36,17 +35,15 @@ export const useChatStore = create<ChatStoreType>(function(set){
             });
         },
         grabContacts: async ()=>{
-            const res = await fetch(baseUrl + '/messages/contacts', {
+            const data = await apiRequest('/messages/contacts', {
                 credentials: 'include'
             });
-            const data = await res.json();
-            set({allContacts: data.users})
+            set({allContacts: data.users});
         },
         getChatPartners: async ()=>{
-            const res = await fetch(baseUrl + '/messages/chatpartners', {
+            const data = await apiRequest('/messages/chatpartners', {
                 credentials: 'include'
             });
-            const data = await res.json();
             set({allChatPartners: data})
         },
         changeView: function(view: string){

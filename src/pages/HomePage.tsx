@@ -7,8 +7,7 @@ import ChatContainer from "../components/ChatContainer";
 import ChatList from "../components/ChatList";
 import MobileHeader from "../components/MobileHeader";
 import { useAuthStore } from "../store/useAuthStore";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+import { apiRequest } from "../utils/utils";
 
 type MessageType = {
     _id: string
@@ -27,12 +26,10 @@ const HomePage = function(){
     const [messages, setMessages] = useState<MessageType[] | null>(null);
 
     const grabChats = async function(){
-        const res = await fetch(baseUrl + '/messages/' + chatStore.selectedChatPartner?._id, {
-            method: 'GET',
+        const apiData = await apiRequest('/messages/' + chatStore.selectedChatPartner?._id, {
             credentials: 'include' as RequestCredentials
         });
-        const data = await res.json();
-        setMessages(data);
+        setMessages(apiData);
     }
 
     useEffect(()=>{

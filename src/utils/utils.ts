@@ -1,3 +1,24 @@
+type FetchPayloadType = {
+    method?: string
+    headers?: {
+        'content-type': string
+    },
+    credentials?: RequestCredentials
+    body?: string
+}
+
+export const apiRequest = async function(route: string, payload: FetchPayloadType){
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    try{
+        const res = await fetch(baseUrl + route, payload);
+        const data = await res.json();
+        console.log('from utils function: ', data)
+        return data;
+    }catch(error){
+        console.log(error);
+    };
+}
+
 export const daysAgoLabel = function (isoString: string | undefined): string {
     if(!isoString){
         return 'unknown'

@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+import { apiRequest } from '../utils/utils';
 
 const LoginPage = function(){
 
@@ -34,23 +33,16 @@ const LoginPage = function(){
             })
         };
 
-        try{
-            const res = await fetch(baseURL + '/auth/login', payload);
-            if(res.ok){
-                const data = await res.json();
+        const data = await apiRequest('/auth/login', payload);
 
-                useAuthStore.setState({
-                    isLoggedIn: true,
-                    authUser: data.userData
-                });
-
-                navigate("/");
-            }else{
-                const data = await res.json();
-                setErrorMessage(data.message);
-            }
-        }catch{
-            setErrorMessage('There has been an error. Please try again later.');
+        if(data?.userData){
+            useAuthStore.setState({
+                isLoggedIn: true,
+                authUser: data.userData
+            });
+            navigate("/");
+        }else{
+            setErrorMessage(data.message);
         }
     };
 

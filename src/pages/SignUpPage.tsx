@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { useAuthStore } from '../store/useAuthStore';
-
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+import { apiRequest } from '../utils/utils';
 
 const SignUpPage = function(){
 
@@ -66,19 +65,13 @@ const SignUpPage = function(){
                 profilePic: image
             })
         };
-        try{
-            const res = await fetch(baseURL + '/auth/signup', payload);
-            if(res.ok){
-                const data = await res.json();
-                console.log(data.message);
-                navigate('/complete');
-            }else{
-                const error = await res.json();
-                console.log(error);
-                setErrorMessage('error');
-            }
-        }catch{
-            setErrorMessage('Error has occured. Please try again later');
+
+        const result = await apiRequest('/auth/signup', payload);
+        if(result){
+            console.log(result.message);
+            navigate('/complete');
+        }else{
+            setErrorMessage('error');
         }
     };
 

@@ -33,7 +33,6 @@ export const useAuthStore = create<AuthStore>(function(set){
         authenticate: async function(){
             try{
                 const res = await fetch(baseURL + '/auth/checkAuth', {
-                    method: 'GET',
                     credentials: 'include',
                 });
                 if(res.ok){
