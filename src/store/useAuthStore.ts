@@ -1,5 +1,4 @@
 type AuthStore = {
-    isLoading: boolean
     isLoggedIn: boolean
     errorMessage: string
     authUser: {
@@ -7,6 +6,8 @@ type AuthStore = {
         email: string
         profilePic: string
         id: string
+        lastLoggedIn: string
+        createdAt: string
     },
     authenticate: ()=> void
 };
@@ -19,31 +20,34 @@ export const useAuthStore = create<AuthStore>(function(set){
     return {
         allContacts: [],
         chats: [],
-        isLoading: false,
         isLoggedIn: false,
         errorMessage: '',
         authUser: {
             username: '',
             email: '',
             profilePic:'',
-            id:''
+            id:'',
+            createdAt:'',
+            lastLoggedIn: '',
         },
         authenticate: async function(){
             try{
-                set({isLoading:true});
                 const res = await fetch(baseURL + '/auth/checkAuth', {
                     method: 'GET',
                     credentials: 'include',
                 });
                 if(res.ok){
                     const data = await res.json();
-                    set((state)=>{
+                    set(()=>{
                         return {
                             isLoggedIn: data.isLoggedIn,
                             authUser: {
-                                ...state.authUser,
                                 profilePic: data.userData.profilePic,
-                                id: data.userData._id
+                                id: data.userData._id,
+                                createdAt: data.userData.createdAt,
+                                lastLoggedIn: data.userData.lastLoggedIn,
+                                username: data.userData.username,
+                                email: data.userData.email,
                             }
                         }
                     });
@@ -55,7 +59,7 @@ export const useAuthStore = create<AuthStore>(function(set){
             }catch(error){
                 console.log(error);
             }finally{
-                set({isLoading:false});
+                console.log('finished')
             }
         }
     }

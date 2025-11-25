@@ -1,4 +1,7 @@
-export const daysAgoLabel = function (isoString: string): string {
+export const daysAgoLabel = function (isoString: string | undefined): string {
+    if(!isoString){
+        return 'unknown'
+    }
     const inputDate = new Date(isoString);
     const today = new Date();
 

@@ -35,7 +35,9 @@ function App() {
                 username: '',
                 email: '',
                 profilePic: '',
-                id:''
+                id:'',
+                createdAt: '',
+                lastLoggedIn: ''
             },
         });
         navigate('/login');
@@ -58,9 +60,10 @@ function App() {
         <div className="my-app">
             <div className="my-app-container">
                 <Sidebar
-                    logout={logout}
+                    isLoggedIn={authStore.isLoggedIn}
                     profilePic={authStore.authUser.profilePic} 
                     id={authStore.authUser.id}
+                    logout={logout}
                 />
                 <div className="main-view background">
                     <Routes>

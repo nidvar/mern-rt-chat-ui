@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from '../store/useChatStore';
-import { readableDate } from '../utils/utils';
+import { daysAgoLabel, readableDate } from '../utils/utils';
 
 type userType = {
     id?: string
@@ -13,6 +13,7 @@ type userType = {
     profilePic: string
     createdAt?: string
     updatedAt?: string
+    lastLoggedIn?: string
     __v?: 0
 }
 
@@ -44,6 +45,7 @@ const ProfilePage = function(){
     useEffect(()=>{
         if(params.id){
             if(params.id === authState.authUser.id){
+                console.log(authState.authUser);
                 setCurrentUser(authState.authUser);
             }else{
                 const user = chatStore.allContacts.find((item: userType)=>{
@@ -73,7 +75,7 @@ const ProfilePage = function(){
                 <div className='member-description'>
                     <p><span className='bold'>Username:</span> {currentUser?.username}</p>
                     <p><span className='bold'>Member since:</span> {readableDate(currentUser?.createdAt)}</p>
-                    <p><span className='bold'>Last logged in:</span> {}</p>
+                    <p><span className='bold'>Last logged in:</span> {daysAgoLabel(currentUser?.lastLoggedIn)}</p>
                 </div>
                 
                 <Link to='/'>BACK</Link>
