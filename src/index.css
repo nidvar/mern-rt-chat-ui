@@ -40,18 +40,32 @@ a {
     text-decoration: none;
 }
 
-.background {
-    background-image: url('/chat-background.jpg');
-    background-color: rgba(255, 255, 255, 0.5);
-    background-blend-mode: lighten;
+/* parent containers */
+
+.my-app {
+    padding: 10px;
+    height: 100vh;
+    background-image: url('/app-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.button {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 6px;
-    background-color: #0d6efd;
-    color: white;
+.my-app-container {
+    padding: 2px;
+    border-radius: 8px;
+    display: flex;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* main block */
+
+.main-view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
 /* sidebar */
@@ -121,33 +135,6 @@ a {
     flex-direction: column;
     justify-content: center;
     gap: 20px;
-}
-
-.my-app {
-    padding: 10px;
-    height: 100vh;
-    background-image: url('/app-background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.my-app-container {
-    padding: 2px;
-    border-radius: 8px;
-    display: flex;
-    height: 100%;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-/* main block */
-
-.main-view {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
 }
 
 /* chatpage */
@@ -338,6 +325,20 @@ a {
 
 .bold {
     font-weight: bold;
+}
+
+.background {
+    background-image: url('/chat-background.jpg');
+    background-color: rgba(255, 255, 255, 0.5);
+    background-blend-mode: lighten;
+}
+
+.button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0d6efd;
+    color: white;
 }
 
 @media (min-width: 700px) {
