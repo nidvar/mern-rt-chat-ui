@@ -12,6 +12,8 @@ const LoginPage = function(){
 
     const [errorMessage, setErrorMessage] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const authStore = useAuthStore();
 
     const handleSubmit = async function(e: React.FormEvent<HTMLFormElement>){
@@ -20,7 +22,7 @@ const LoginPage = function(){
             setErrorMessage('Fields must not be empty');
             return;
         };
-
+        setLoading(true);
         const payload = {
             method: 'POST',
             headers: {
@@ -40,8 +42,10 @@ const LoginPage = function(){
                 isLoggedIn: true,
                 authUser: data.userData
             });
+            setLoading(false);
             navigate("/");
         }else{
+            setLoading(false);
             setErrorMessage(data.message);
         }
     };
@@ -54,24 +58,34 @@ const LoginPage = function(){
 
     return (
         <div className='form-page'>
-            <form onSubmit={handleSubmit} className='my-form'>
-                <h1>Login</h1>
-                <input 
-                    type="email"
-                    placeholder='email'
-                    value={email}
-                    onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
-                />
-                <input 
-                    type="password"
-                    placeholder='password'
-                    value={password}
-                    onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
-                />
-                <button type="submit">LOGIN</button>
-                <p><Link to='/signup' className='link'>REGISTER</Link></p>
-                <p className='error'>{errorMessage}</p>
-            </form>
+            {
+                loading===true? 
+                <div className='loading-message'>
+                    <h1>Loading.....</h1>
+                    <p>Free web hosting....</p>
+                    <p>May take a minute or two....</p>
+                    <p>Please be patient.</p>
+                    <p>Thank you.</p>
+                </div>:
+                <form onSubmit={handleSubmit} className='my-form'>
+                    <h1>Login</h1>
+                    <input 
+                        type="email"
+                        placeholder='email'
+                        value={email}
+                        onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
+                    />
+                    <input 
+                        type="password"
+                        placeholder='password'
+                        value={password}
+                        onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
+                    />
+                    <button type="submit">LOGIN</button>
+                    <p><Link to='/signup' className='link'>REGISTER</Link></p>
+                    <p className='error'>{errorMessage}</p>
+                </form>
+            }
         </div>
     )
 }

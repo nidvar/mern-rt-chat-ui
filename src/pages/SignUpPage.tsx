@@ -19,6 +19,8 @@ const SignUpPage = function(){
 
     const [errorMessage, setErrorMessage] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const handleImageUpload = function(e: React.ChangeEvent<HTMLInputElement>){
         setErrorMessage('');
         if(e.target.files && e.target.files[0]){
@@ -52,6 +54,7 @@ const SignUpPage = function(){
             setErrorMessage('Fields cannot be empty');
             return;
         };
+        setLoading(true);
         const payload = {
             method: 'POST',
             headers: {
@@ -65,12 +68,14 @@ const SignUpPage = function(){
                 profilePic: image
             })
         };
-
+        
         const result = await apiRequest('/auth/signup', payload);
         if(result){
             console.log(result.message);
+            setLoading(false);
             navigate('/complete');
         }else{
+            setLoading(false);
             setErrorMessage('error');
         }
     };
@@ -83,40 +88,50 @@ const SignUpPage = function(){
 
     return(
         <div className='form-page'>
-            <form onSubmit={handleSubmit} className='my-form'>
-                <h1>Register</h1>
-                <img 
-                    src={image || "blank_profile.jpg"}
-                    className='register-image'
-                />
-                <input 
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleImageUpload}
-                />
-                <input 
-                    type="text"
-                    placeholder='username'
-                    value={username}
-                    onChange={function(e){setUsername(e.target.value); setErrorMessage('')}}
-                />
-                <input 
-                    type="email"
-                    placeholder='email'
-                    value={email}
-                    onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
-                />
-                <input 
-                    type="password"
-                    placeholder='password'
-                    value={password}
-                    onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
-                />
-                <button type="submit" disabled={errorMessage != ''}>REGISTER</button>
-                <p><Link to='/login' className='link'>BACK TO LOGIN</Link></p>
-                <p className='error'>{errorMessage}</p>
-            </form>
+            {
+                loading===true?
+                <div className='loading-message'>
+                    <h1>Loading.....</h1>
+                    <p>Free web hosting....</p>
+                    <p>May take a minute or two....</p>
+                    <p>Please be patient.</p>
+                    <p>Thank you.</p>
+                </div>:
+                <form onSubmit={handleSubmit} className='my-form'>
+                    <h1>Register</h1>
+                    <img 
+                        src={image || "blank_profile.jpg"}
+                        className='register-image'
+                    />
+                    <input 
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        onChange={handleImageUpload}
+                    />
+                    <input 
+                        type="text"
+                        placeholder='username'
+                        value={username}
+                        onChange={function(e){setUsername(e.target.value); setErrorMessage('')}}
+                    />
+                    <input 
+                        type="email"
+                        placeholder='email'
+                        value={email}
+                        onChange={function(e){setEmail(e.target.value); setErrorMessage('')}}
+                    />
+                    <input 
+                        type="password"
+                        placeholder='password'
+                        value={password}
+                        onChange={function(e){setPassword(e.target.value); setErrorMessage('')}}
+                    />
+                    <button type="submit" disabled={errorMessage != ''}>REGISTER</button>
+                    <p><Link to='/login' className='link'>BACK TO LOGIN</Link></p>
+                    <p className='error'>{errorMessage}</p>
+                </form>
+            }
         </div>
     )
 };
