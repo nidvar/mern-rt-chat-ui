@@ -34,13 +34,14 @@ const LoginPage = function(){
         };
 
         const data = await apiRequest('/auth/login', payload);
-        authStore.connectSocket();
+
         if(data?.userData){
             useAuthStore.setState({
                 isLoggedIn: true,
                 authUser: data.userData
             });
             setLoading(false);
+            authStore.connectSocket();
             navigate("/");
         }else{
             setLoading(false);

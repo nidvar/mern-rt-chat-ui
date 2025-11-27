@@ -65,7 +65,6 @@ export const useAuthStore = create<AuthStore>(function(set, get){
                 if(res.ok){
                     const data = await res.json();
                     set(()=>{
-                        get().connectSocket();
                         return {
                             isLoggedIn: data.isLoggedIn,
                             authUser: {
@@ -78,6 +77,7 @@ export const useAuthStore = create<AuthStore>(function(set, get){
                             }
                         }
                     });
+                    setTimeout(()=>{get().connectSocket()}, 500)
                 }else{
                     if(res.statusText){
                         set({errorMessage: res.statusText});
@@ -93,6 +93,7 @@ export const useAuthStore = create<AuthStore>(function(set, get){
             console.log('connecting to socket')
             const username = get().authUser?.username;
             if(username === ''){
+                console.log('no username. socket not connecting');
                 return
             };
             const socket = io(baseURL, {
