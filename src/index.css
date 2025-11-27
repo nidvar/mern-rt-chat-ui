@@ -47,7 +47,7 @@ a {
     height: 100vh;
     background-image: url('/app-background.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
 }
 
 .my-app-container {
