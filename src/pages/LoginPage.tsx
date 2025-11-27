@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+
 import { useAuthStore } from '../store/useAuthStore';
 import { apiRequest } from '../utils/utils';
 
 const LoginPage = function(){
 
     const navigate = useNavigate();
+    const authStore = useAuthStore();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const [errorMessage, setErrorMessage] = useState('');
-
     const [loading, setLoading] = useState(false);
-
-    const authStore = useAuthStore();
 
     const handleSubmit = async function(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -36,7 +34,7 @@ const LoginPage = function(){
         };
 
         const data = await apiRequest('/auth/login', payload);
-
+        authStore.connectSocket();
         if(data?.userData){
             useAuthStore.setState({
                 isLoggedIn: true,

@@ -1,29 +1,24 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useChatStore } from '../store/useChatStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 import ContactsList from '../components/ContactsList';
 import ChatList from "../components/ChatList";
 
-type SidebarTypes = {
-    isLoggedIn: boolean
-    profilePic: string
-    id: string
-    logout: ()=> void
-};
-
-const Sidebar = function({isLoggedIn, logout, profilePic, id}: SidebarTypes){
+const Sidebar = function(){
     const chatStore = useChatStore();
+    const authStore = useAuthStore();
     const navigate = useNavigate();
     return(
         <>
             {
-                isLoggedIn?
+                authStore.isLoggedIn?
                 <div className='sidebar'>
                     <div className='column inner-sidebar'>
                         <div className='top-sidebar-nav desktop-nav'>
-                            <Link to={'profile/' + id}>
-                                <img src={profilePic || "blank_profile.jpg"} className='profile-image'/>
+                            <Link to={'profile/' + authStore.authUser.id}>
+                                <img src={authStore.authUser.profilePic || "blank_profile.jpg"} className='profile-image'/>
                             </Link>
                             <span
                                 className='icons'
@@ -48,7 +43,7 @@ const Sidebar = function({isLoggedIn, logout, profilePic, id}: SidebarTypes){
                         </div>
 
                     </div>
-                    <span onClick={logout} className='icons'>
+                    <span onClick={function(){authStore.logout(); navigate('/login');}} className='icons'>
                         <img src={'logout_icon.png'} />
                     </span>
                 </div>:''

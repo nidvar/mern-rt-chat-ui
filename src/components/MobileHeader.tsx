@@ -1,20 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useChatStore } from '../store/useChatStore';
+import { useAuthStore } from '../store/useAuthStore';
 
-type SidebarTypes = {
-    profilePic: string
-    id: string
-    logout: ()=> void
-};
-
-const MobileHeader = function({logout, profilePic, id}: SidebarTypes){
+const MobileHeader = function(){
     const chatStore = useChatStore();
+    const authStore = useAuthStore();
     const navigate = useNavigate();
     return(
         <div className="mobile-header">
-            <Link to={'profile/' + id}>
-                <img src={profilePic || "blank_profile.jpg"} className='profile-image'/>
+            <Link to={'profile/' + authStore.authUser.id}>
+                <img src={authStore.authUser.profilePic || "blank_profile.jpg"} className='profile-image'/>
             </Link>
             <span
                 className='icons'
@@ -29,7 +25,7 @@ const MobileHeader = function({logout, profilePic, id}: SidebarTypes){
                 <img src={'contact_icon.png'} />
             </span>
 
-            <span onClick={logout} className='icons'>
+            <span onClick={function(){authStore.logout(); navigate('/login');}} className='icons'>
                 <img src={'logout_icon.png'} />
             </span>
         </div>

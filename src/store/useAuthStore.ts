@@ -1,4 +1,10 @@
+import { io, Socket } from "socket.io-client";
+import { create } from 'zustand';
+
+import { apiRequest } from "../utils/utils";
+
 type AuthStore = {
+    socket: Socket | null
     isLoggedIn: boolean
     errorMessage: string
     authUser: {
@@ -9,15 +15,17 @@ type AuthStore = {
         lastLoggedIn: string
         createdAt: string
     },
+    logout: ()=> void
     authenticate: ()=> void
+    connectSocket: ()=> void
+    disconnectSocket: ()=> void
 };
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-import { create } from 'zustand';
-
-export const useAuthStore = create<AuthStore>(function(set){
+export const useAuthStore = create<AuthStore>(function(set, get){
     return {
+        socket: null,
         allContacts: [],
         chats: [],
         isLoggedIn: false,
@@ -30,6 +38,25 @@ export const useAuthStore = create<AuthStore>(function(set){
             createdAt:'',
             lastLoggedIn: '',
         },
+        logout: async function(){
+            const payload = {
+                method: 'POST',
+                credentials: 'include' as RequestCredentials
+            };
+            await apiRequest('/auth/logout', payload);
+            get().disconnectSocket();
+            useAuthStore.setState({
+                isLoggedIn: false,
+                authUser: {
+                    username: '',
+                    email: '',
+                    profilePic: '',
+                    id:'',
+                    createdAt: '',
+                    lastLoggedIn: ''
+                },
+            });
+        },
         authenticate: async function(){
             try{
                 const res = await fetch(baseURL + '/auth/checkAuth', {
@@ -38,6 +65,7 @@ export const useAuthStore = create<AuthStore>(function(set){
                 if(res.ok){
                     const data = await res.json();
                     set(()=>{
+                        get().connectSocket();
                         return {
                             isLoggedIn: data.isLoggedIn,
                             authUser: {
@@ -60,6 +88,24 @@ export const useAuthStore = create<AuthStore>(function(set){
             }finally{
                 console.log('finished')
             }
-        }
+        },
+        connectSocket: ()=>{
+            console.log('connecting to socket')
+            const username = get().authUser?.username;
+            if(username === ''){
+                return
+            };
+            const socket = io(baseURL, {
+                withCredentials: true,
+            });
+            socket.connect();
+            set({socket: socket})
+        },
+        disconnectSocket: ()=>{
+            console.log('discon to socket')
+            if(get().socket?.connected){
+                get().socket?.disconnect();
+            }
+        },
     }
 })

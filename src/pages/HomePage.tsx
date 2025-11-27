@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
 
 import { useChatStore } from '../store/useChatStore';
 
@@ -7,7 +6,7 @@ import ContactsList from '../components/ContactsList';
 import ChatContainer from "../components/ChatContainer";
 import ChatList from "../components/ChatList";
 import MobileHeader from "../components/MobileHeader";
-import { useAuthStore } from "../store/useAuthStore";
+
 import { apiRequest } from "../utils/utils";
 
 type MessageType = {
@@ -21,10 +20,7 @@ type MessageType = {
 }
 
 const HomePage = function(){
-    const navigate = useNavigate();
-
     const chatStore = useChatStore();
-    const authStore = useAuthStore();
 
     const [messages, setMessages] = useState<MessageType[] | null>(null);
 
@@ -33,28 +29,6 @@ const HomePage = function(){
             credentials: 'include' as RequestCredentials
         });
         setMessages(apiData);
-    }
-
-    const logout = async function(){
-        const payload = {
-            method: 'POST',
-            credentials: 'include' as RequestCredentials
-        };
-        const result = await apiRequest('/auth/logout', payload);
-        if(result){
-            useAuthStore.setState({
-                isLoggedIn: false,
-                authUser: {
-                    username: '',
-                    email: '',
-                    profilePic: '',
-                    id:'',
-                    createdAt: '',
-                    lastLoggedIn: ''
-                },
-            });
-            navigate('/login');
-        }
     }
 
     useEffect(()=>{
@@ -72,11 +46,7 @@ const HomePage = function(){
                         chatStore.selectedChatPartner && chatStore.view === '' ?
                         <ChatContainer messages={messages} chatPartner={chatStore.selectedChatPartner} />:
                         <>
-                            <MobileHeader
-                                profilePic={authStore.authUser.profilePic} 
-                                id={authStore.authUser.id} 
-                                logout={logout}
-                            />
+                            <MobileHeader />
                             {
                                 chatStore.view === 'chats'?
                                 <ChatList allChatPartners={chatStore.allChatPartners} />:

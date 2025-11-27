@@ -1,20 +1,16 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-
 import { useEffect } from "react";
+
+import { useAuthStore } from "./store/useAuthStore";
+import { useChatStore } from './store/useChatStore';
 
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CompletePage from './pages/CompletePage';
-
-import { useAuthStore } from "./store/useAuthStore";
-import { useChatStore } from './store/useChatStore';
 import ProfilePage from "./pages/ProfilePage";
 
 import Sidebar from './components/Sidebar';
-
-
-const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 function App() {
 
@@ -22,26 +18,6 @@ function App() {
     const chatState = useChatStore();
 
     const navigate = useNavigate();
-
-    const logout = async function(){
-        const payload = {
-            method: 'POST',
-            credentials: 'include' as RequestCredentials
-        };
-        await fetch(baseURL + '/auth/logout', payload);
-        useAuthStore.setState({
-            isLoggedIn: false,
-            authUser: {
-                username: '',
-                email: '',
-                profilePic: '',
-                id:'',
-                createdAt: '',
-                lastLoggedIn: ''
-            },
-        });
-        navigate('/login');
-    }
 
     useEffect(()=>{
         authStore.authenticate();
@@ -59,12 +35,7 @@ function App() {
     return (
         <div className="my-app">
             <div className="my-app-container">
-                <Sidebar
-                    isLoggedIn={authStore.isLoggedIn}
-                    profilePic={authStore.authUser.profilePic} 
-                    id={authStore.authUser.id}
-                    logout={logout}
-                />
+                <Sidebar />
                 <div className="main-view background">
                     <Routes>
                         <Route path='/' element={<HomePage />} />
