@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import { useChatStore } from '../store/useChatStore';
 import { useAuthStore } from '../store/useAuthStore';
@@ -11,12 +9,24 @@ type allChatPartnersPropsType = {
 }
 
 const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
-    const chatState = useChatStore();
+    const chatStore = useChatStore();
     const authStore = useAuthStore();
     const navigate = useNavigate();
 
-    useEffect(()=>{
-    }, [chatState.allChatPartners]);
+    const grabLastMessage = function(userId:string | undefined): string{
+        let result = '';
+        chatStore.totalChatHistory.forEach((item)=>{
+            if(item.recieverId === userId || item.senderId === userId){
+                result = item.text;
+            }
+        });
+        let shorten = result.split('');
+        if(shorten.length > 10){
+            shorten = shorten.splice(0, 10)
+        };
+        result = shorten.join('')
+        return result;
+    }
 
     return(
         <div className='chat-list'>
@@ -25,7 +35,7 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
                     <div 
                         className='chats-link'
                         key={item._id}
-                        onClick={function(){chatState.selectChat(item); navigate('/')}}
+                        onClick={function(){chatStore.selectChat(item); navigate('/')}}
                     >
                         <img src={item.profilePic} className="profile-image"/>
                         <div>
@@ -34,7 +44,7 @@ const ChatList = ({allChatPartners}: allChatPartnersPropsType)=>{
                                 <span className='online-status'> - &#128994; online</span>:
                                 <span className='offline-status'> - &#9898; offline</span>}
                             </p>
-                            <p>.....</p>
+                            <p className='last-message'>{grabLastMessage(item._id)}....</p>
                         </div>
                     </div>
                 )

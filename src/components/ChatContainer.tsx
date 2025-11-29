@@ -45,14 +45,12 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                 chatPartner?
                 <>
                     <div className="chat-container-header">
-                        <div className='mobile-back-container'>
-                            <span className='icons mobile-back' >
-                                <img 
-                                    src={'go-back.png'} 
-                                    onClick={function(){chatStore.changeView('contacts')}}
-                                />
-                            </span>
-                        </div>
+                        <span className='icons mobile-back' >
+                            <img 
+                                src={'go-back.png'} 
+                                onClick={function(){chatStore.changeView('contacts')}}
+                            />
+                        </span>
                         <Link to={"/profile/" + chatPartner?._id}>
                             <img 
                                 src={chatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'
@@ -85,14 +83,14 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                         }
                     </div>
                     <div className="message-input">
-                            <form onSubmit={function(e){handleSubmit(e)}}>
-                                <input
-                                    value={message}
-                                    onChange={function(e){setMessage(e.target.value);}}
-                                />
-                                <button>SEND</button>
-                            </form>
-                        </div>
+                        <form onSubmit={function(e){handleSubmit(e)}}>
+                            <input
+                                value={message}
+                                onChange={function(e){setMessage(e.target.value);}}
+                            />
+                            <button>{'ENT'}</button>
+                        </form>
+                    </div>
                 </>:''
             }
         </div>
