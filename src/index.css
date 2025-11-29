@@ -362,6 +362,11 @@ a {
     color: grey;
 }
 
+.guest-account {
+    line-height: normal;
+    text-align: left;
+}
+
 @media (min-width: 700px) {
 
     .my-app {
