@@ -3,32 +3,14 @@ import { useState, useRef, useEffect } from 'react';
 
 import { useAuthStore } from "../store/useAuthStore";
 
-import { daysAgoLabel, apiRequest } from "../utils/utils";
+import { daysAgoLabel } from "../utils/utils";
 import { useChatStore } from '../store/useChatStore';
 
-type ChatPartnerType = {
-    _id: string
-    username: string
-    email: string
-    profilePic: string
-    createdAt: string
-    updatedAt: string
-    __v: 0
-}
+import type { MessageType, UserType } from "../utils/types";
 
 type ChatPartnerProp = {
-    messages: Message[] | null
-    chatPartner: ChatPartnerType | null
-}
-
-type Message = {
-    _id: string
-    senderId: string
-    recieverId: string
-    text: string
-    createdAt: string
-    updatedAt: string
-    __v: 0
+    messages: MessageType[] | null
+    chatPartner: UserType | null
 }
 
 const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
@@ -41,16 +23,13 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
 
     const handleSubmit = async (e: { preventDefault: () => void; })=>{
         e.preventDefault();
-        const payload = {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({message: message}),
-            credentials: 'include' as RequestCredentials
+        if(message.trim() == ''){
+            return
         };
-        const result = await apiRequest('/messages/send/' + chatPartner?._id, payload);
-        console.log(result);
+        authStore.socket?.emit('sendMessage', {
+            recieverId: chatPartner?._id,
+            text: message
+        });
         setMessage('');
     };
 
@@ -79,7 +58,7 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                                 src={chatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'
                             />
                             <span>
-                                {authStore.onlineUsers.includes(chatPartner?._id)? 
+                                {authStore.onlineUsers.includes(chatPartner?._id || '')? 
                                 <span className='online-status'>&#128994; </span>:
                                 <span className='offline-status'>&#9898; </span>}
                                 {chatPartner?.username}

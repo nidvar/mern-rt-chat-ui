@@ -3,26 +3,16 @@ import { useEffect, useState } from 'react';
 
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from '../store/useChatStore';
-import { daysAgoLabel, readableDate } from '../utils/utils';
 
-type userType = {
-    id?: string
-    _id?: string
-    username: string
-    email: string
-    profilePic: string
-    createdAt?: string
-    updatedAt?: string
-    lastLoggedIn?: string
-    __v?: 0
-}
+import { daysAgoLabel, readableDate } from '../utils/utils';
+import type { UserType } from "../utils/types";
 
 const ProfilePage = function(){
     const authState = useAuthStore();
     const chatStore = useChatStore();
     const params = useParams();
 
-    const [currentUser, setCurrentUser] = useState<userType | null>(null);
+    const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
     const updateProfile = async function(){
         return
@@ -47,7 +37,7 @@ const ProfilePage = function(){
             if(params.id === authState.authUser.id){
                 setCurrentUser(authState.authUser);
             }else{
-                const user = chatStore.allContacts.find((item: userType)=>{
+                const user = chatStore.allContacts.find((item: UserType)=>{
                     if(item._id === params.id){
                         return true;
                     }

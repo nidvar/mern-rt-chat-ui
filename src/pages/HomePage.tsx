@@ -1,41 +1,41 @@
 import { useEffect, useState } from "react";
 
 import { useChatStore } from '../store/useChatStore';
+// import { useAuthStore } from "../store/useAuthStore";
 
 import ContactsList from '../components/ContactsList';
 import ChatContainer from "../components/ChatContainer";
 import ChatList from "../components/ChatList";
 import MobileHeader from "../components/MobileHeader";
 
-import { apiRequest } from "../utils/utils";
-
-type MessageType = {
-    _id: string
-    senderId: string
-    recieverId: string
-    text: string
-    createdAt: string
-    updatedAt: string
-    __v: 0
-}
+import type { MessageType } from "../utils/types";
 
 const HomePage = function(){
     const chatStore = useChatStore();
 
     const [messages, setMessages] = useState<MessageType[] | null>(null);
 
-    const grabChats = async function(){
-        const apiData = await apiRequest('/messages/' + chatStore.selectedChatPartner?._id, {
-            credentials: 'include' as RequestCredentials
-        });
-        setMessages(apiData);
+    const updateMessages = function(){
+        const arr = [] as MessageType[];;
+            chatStore.totalChatHistory.forEach((item)=>{
+                if(
+                    item.recieverId === chatStore.selectedChatPartner?._id || 
+                    item.senderId === chatStore.selectedChatPartner?._id){
+                        arr.push(item);
+                    }
+            });
+            setMessages(arr);
     }
 
     useEffect(()=>{
         if(chatStore.selectedChatPartner != null){
-            grabChats();
+            updateMessages();
         }
     }, [chatStore.selectedChatPartner]);
+
+    useEffect(()=>{
+        updateMessages();
+    }, [chatStore.totalChatHistory])
 
     return(
         <div className="chat-page">

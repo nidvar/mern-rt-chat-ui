@@ -2,6 +2,9 @@ import { io, Socket } from "socket.io-client";
 import { create } from 'zustand';
 
 import { apiRequest } from "../utils/utils";
+import { useChatStore } from "./useChatStore";
+
+import type { MessageType } from "../utils/types";
 
 type AuthStore = {
     socket: Socket | null
@@ -92,31 +95,42 @@ export const useAuthStore = create<AuthStore>(function(set, get){
             }
         },
         connectSocket: ()=>{
-            console.log('connecting to socket')
-            const username = get().authUser?.username;
-            if(username === ''){
-                console.log('no username. socket not connecting');
-                return
-            };
             const socket = io(baseURL, {
                 withCredentials: true,
             });
-
             socket.connect();
-            
             set({socket: socket});
-
             socket.on('getOnlineUsers', (onlineUsers)=>{
                 useAuthStore.setState({
                     onlineUsers: onlineUsers
                 })
-            })
+            });
+            socket.on('allMessagesOnLogin', (arg)=>{
+                useChatStore.setState({totalChatHistory: arg})
+            });
+            socket.on('singleMessage', (arg)=>{
+                useChatStore.setState((state) => ({
+                    totalChatHistory: [...state.totalChatHistory, ...arg]
+                }));
+            });
         },
         disconnectSocket: ()=>{
-            console.log('discon to socket')
+            console.log('discon to socket');
             if(get().socket?.connected){
                 get().socket?.disconnect();
             }
         },
+        grabAllChats: async function(){
+            const socket = io(baseURL, {
+                withCredentials: true,
+            });
+            socket.connect();
+            set({socket: socket});
+            socket.on('allMessages', (messages) => {
+                messages.forEach((item: MessageType)=>{
+                    console.log(item)
+                });
+            });
+        }
     }
 })

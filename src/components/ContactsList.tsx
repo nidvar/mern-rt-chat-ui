@@ -3,18 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useChatStore } from '../store/useChatStore';
 import { useAuthStore } from '../store/useAuthStore';
 
-type userType = {
-    _id: string
-    username: string
-    email: string
-    profilePic: string
-    createdAt: string
-    updatedAt: string
-    __v: 0
-}
+import type { UserType } from "../utils/types";
 
 type contactListProp = {
-    allContacts: userType[]
+    allContacts: UserType[]
 }
 
 const ContactsList = ({allContacts}: contactListProp)=>{
@@ -24,7 +16,7 @@ const ContactsList = ({allContacts}: contactListProp)=>{
     return(
         <div className='contacts-list'>
             {
-                allContacts.map((item: userType)=>{
+                allContacts.map((item: UserType)=>{
                     return(
                         <div
                             className="chats-link"
@@ -33,7 +25,7 @@ const ContactsList = ({allContacts}: contactListProp)=>{
                         >
                             <img src={item.profilePic} className="profile-image"/>
                             <p>{item.username}
-                                {authStore.onlineUsers.includes(item._id)? 
+                                {authStore.onlineUsers.includes(item._id || '')? 
                                 <span className='online-status'> - &#128994; online</span>:
                                 <span className='offline-status'> - &#9898; offline</span>}
                             </p>

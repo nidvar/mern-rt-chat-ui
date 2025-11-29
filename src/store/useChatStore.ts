@@ -1,34 +1,28 @@
 import { create } from 'zustand';
+
 import { apiRequest } from '../utils/utils';
+import type { UserType, MessageType } from "../utils/types";
 
 type ChatStoreType = {
+    totalChatHistory: MessageType[]
     view: string
-    selectedChatPartner: ChatPartnerType | null
+    selectedChatPartner: UserType | null
     allChatPartners: []
     allContacts: []
-    selectChat: (chatPartner: ChatPartnerType)=> void
+    selectChat: (chatPartner: UserType)=> void
     grabContacts: ()=> void
     getChatPartners: ()=> void
     changeView: (view: string)=> void
 };
 
-type ChatPartnerType = {
-    _id: string
-    username: string
-    email: string
-    profilePic: string
-    createdAt: string
-    updatedAt: string
-    __v: 0
-}
-
 export const useChatStore = create<ChatStoreType>(function(set){
     return {
+        totalChatHistory: [],
         view: '',
         selectedChatPartner: null,
         allChatPartners: [],
         allContacts: [],
-        selectChat: (chatPartner: ChatPartnerType) => {
+        selectChat: (chatPartner: UserType) => {
             set({
                 selectedChatPartner: chatPartner,
                 view: ''
