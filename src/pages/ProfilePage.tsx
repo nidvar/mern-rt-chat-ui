@@ -67,7 +67,7 @@ const ProfilePage = function(){
                     <p><span className='bold'>Last logged in:</span> {daysAgoLabel(currentUser?.lastLoggedIn)}</p>
                 </div>
                 
-                <Link to='/'>BACK</Link>
+                <Link to='/' className='button'>BACK</Link>
             </div>
         </div>
     )
