@@ -78,7 +78,12 @@ const ChatContainer = ({messages, chatPartner}: ChatPartnerProp)=>{
                             <img 
                                 src={chatPartner?.profilePic || "blank_profile.jpg"} className='profile-image'
                             />
-                            <span>{chatPartner?.username}</span>
+                            <span>
+                                {authStore.onlineUsers.includes(chatPartner?._id)? 
+                                <span className='online-status'>&#128994; </span>:
+                                <span className='offline-status'>&#9898; </span>}
+                                {chatPartner?.username}
+                            </span>
                         </Link>
                     </div>
                     <div className="chat-box" ref={chatBoxRef}>

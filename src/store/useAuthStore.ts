@@ -5,6 +5,7 @@ import { apiRequest } from "../utils/utils";
 
 type AuthStore = {
     socket: Socket | null
+    onlineUsers: string[]
     isLoggedIn: boolean
     errorMessage: string
     authUser: {
@@ -26,6 +27,7 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 export const useAuthStore = create<AuthStore>(function(set, get){
     return {
         socket: null,
+        onlineUsers: [],
         allContacts: [],
         chats: [],
         isLoggedIn: false,
@@ -86,7 +88,7 @@ export const useAuthStore = create<AuthStore>(function(set, get){
             }catch(error){
                 console.log(error);
             }finally{
-                console.log('finished')
+                console.log('finished');
             }
         },
         connectSocket: ()=>{
@@ -99,8 +101,16 @@ export const useAuthStore = create<AuthStore>(function(set, get){
             const socket = io(baseURL, {
                 withCredentials: true,
             });
+
             socket.connect();
-            set({socket: socket})
+            
+            set({socket: socket});
+
+            socket.on('getOnlineUsers', (onlineUsers)=>{
+                useAuthStore.setState({
+                    onlineUsers: onlineUsers
+                })
+            })
         },
         disconnectSocket: ()=>{
             console.log('discon to socket')
