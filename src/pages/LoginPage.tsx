@@ -83,8 +83,8 @@ const LoginPage = function(){
                     <button type="submit">LOGIN</button>
                     <div className='guest-account'>
                         <p><span className='bold'>Test account</span></p>
-                        <p><span className='bold'>email:</span> ben@mail.com</p>
-                        <p><span className='bold'>password:</span> ben123</p>
+                        <p><span className='bold'>email:</span> guest@mail.com</p>
+                        <p><span className='bold'>password:</span> guest123</p>
                     </div>
                     <p><Link to='/signup' className='link'>REGISTER</Link></p>
                     <p className='error'>{errorMessage}</p>
