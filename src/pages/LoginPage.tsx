@@ -82,7 +82,7 @@ const LoginPage = function(){
                     />
                     <button type="submit">LOGIN</button>
                     <div className='guest-account'>
-                        <p><span className='bold'>Test account</span></p>
+                        <p><span className='bold'>Guest account</span></p>
                         <p><span className='bold'>email:</span> guest@mail.com</p>
                         <p><span className='bold'>password:</span> guest123</p>
                     </div>
