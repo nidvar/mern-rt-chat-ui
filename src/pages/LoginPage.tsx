@@ -37,6 +37,8 @@ const LoginPage = function(){
 
         const data = await apiRequest('/auth/login', payload);
 
+        console.log(data);
+
         if(data?.userData){
             useAuthStore.setState({
                 isLoggedIn: true,

@@ -65,6 +65,7 @@ export const useAuthStore = create<AuthStore>(function(set, get){
                 const res = await fetch('/auth/checkAuth', {
                     credentials: 'include',
                 });
+                console.log(res);
                 if(res.ok){
                     const data = await res.json();
                     set(()=>{

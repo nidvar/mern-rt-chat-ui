@@ -20,6 +20,7 @@ export const apiRequest = async function(route: string, payload: FetchPayloadTyp
 
     try{
         const res = await fetch(route, finalPayload);
+        console.log(res);
         const data = await res.json();
         console.log('from utils function: ', data)
         return data;
