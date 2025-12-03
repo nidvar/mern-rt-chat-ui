@@ -58,7 +58,7 @@ const SignUpPage = function(){
         const payload = {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
             credentials: 'include' as RequestCredentials,
             body: JSON.stringify({

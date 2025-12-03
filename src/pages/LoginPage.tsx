@@ -21,10 +21,12 @@ const LoginPage = function(){
             return;
         };
         setLoading(true);
+
         const payload = {
             method: 'POST',
+            mode: 'cors' as RequestMode,
             headers: {
-                'content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
             credentials: 'include' as RequestCredentials,
             body: JSON.stringify({
