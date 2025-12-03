@@ -25,6 +25,8 @@ type AuthStore = {
     disconnectSocket: ()=> void
 };
 
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 export const useAuthStore = create<AuthStore>(function(set, get){
     return {
         socket: null,
@@ -62,10 +64,9 @@ export const useAuthStore = create<AuthStore>(function(set, get){
         },
         authenticate: async function(){
             try{
-                const res = await fetch('/auth/checkAuth', {
+                const res = await fetch(baseURL + '/auth/checkAuth', {
                     credentials: 'include',
                 });
-                console.log(res);
                 if(res.ok){
                     const data = await res.json();
                     set(()=>{
@@ -94,7 +95,7 @@ export const useAuthStore = create<AuthStore>(function(set, get){
             }
         },
         connectSocket: ()=>{
-            const socket = io({
+            const socket = io(baseURL, {
                 withCredentials: true,
             });
             socket.connect();
@@ -120,7 +121,7 @@ export const useAuthStore = create<AuthStore>(function(set, get){
             }
         },
         grabAllChats: async function(){
-            const socket = io({
+            const socket = io(baseURL, {
                 withCredentials: true,
             });
             socket.connect();

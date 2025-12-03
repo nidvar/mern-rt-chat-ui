@@ -7,6 +7,8 @@ type FetchPayloadType = {
 }
 
 export const apiRequest = async function(route: string, payload: FetchPayloadType){
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
     const finalPayload: RequestInit = {
         method: payload.method || "GET",
         mode: payload.mode || "cors",
@@ -19,8 +21,7 @@ export const apiRequest = async function(route: string, payload: FetchPayloadTyp
     };
 
     try{
-        const res = await fetch(route, finalPayload);
-        console.log(res);
+        const res = await fetch(baseUrl + route, finalPayload);
         const data = await res.json();
         console.log('from utils function: ', data)
         return data;
