@@ -27,6 +27,7 @@ const LoginPage = function(){
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include' as RequestCredentials,
             body: JSON.stringify({
                 email: email,
                 password: password

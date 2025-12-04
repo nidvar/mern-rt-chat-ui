@@ -29,11 +29,15 @@ export const useChatStore = create<ChatStoreType>(function(set){
             });
         },
         grabContacts: async ()=>{
-            const data = await apiRequest('/messages/contacts', {});
+            const data = await apiRequest('/messages/contacts', {
+                credentials: 'include'
+            });
             set({allContacts: data.users});
         },
         getChatPartners: async ()=>{
-            const data = await apiRequest('/messages/chatpartners', {});
+            const data = await apiRequest('/messages/chatpartners', {
+                credentials: 'include'
+            });
             set({allChatPartners: data})
         },
         changeView: function(view: string){
