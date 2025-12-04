@@ -1,34 +1,31 @@
 type FetchPayloadType = {
-    method?: string
-    mode?: RequestMode
-    headers?: Record<string, string>
-    credentials?: RequestCredentials
-    body?: string
+  method?: string;
+  headers?: Record<string, string>;
+  credentials?: RequestCredentials;
+  body?: string;
 }
 
-export const apiRequest = async function(route: string, payload: FetchPayloadType){
-    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+export const apiRequest = async (route: string, payload: FetchPayloadType) => {
+  const finalPayload: RequestInit = {
+    method: payload.method || 'GET',
+    credentials: payload.credentials || 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(payload.headers || {})
+    },
+    body: payload.body
+  };
 
-    const finalPayload: RequestInit = {
-        method: payload.method || "GET",
-        mode: payload.mode || "cors",
-        credentials: payload.credentials || "include",
-        headers: {
-            "Content-Type": "application/json",
-            ...(payload.headers || {})
-        },
-        body: payload.body
-    };
-
-    try{
-        const res = await fetch(baseUrl + route, finalPayload);
-        const data = await res.json();
-        console.log('from utils function: ', data)
-        return data;
-    }catch(error){
-        console.log(error);
-    };
+  try {
+    const res = await fetch(route, finalPayload); // <- RELATIVE PATH
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    return { message: 'Network error' };
+  }
 }
+
 
 export const daysAgoLabel = function (isoString: string | undefined): string {
     if(!isoString){
