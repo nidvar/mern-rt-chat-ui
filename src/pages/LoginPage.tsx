@@ -34,7 +34,7 @@ const LoginPage = function(){
             })
         };
 
-        const data = await apiRequest('/auth/login', payload);
+        const data = await apiRequest('/api/auth/login', payload);
 
         console.log(data);
 

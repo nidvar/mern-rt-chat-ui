@@ -29,13 +29,13 @@ export const useChatStore = create<ChatStoreType>(function(set){
             });
         },
         grabContacts: async ()=>{
-            const data = await apiRequest('/messages/contacts', {
+            const data = await apiRequest('/api/messages/contacts', {
                 credentials: 'include'
             });
             set({allContacts: data.users});
         },
         getChatPartners: async ()=>{
-            const data = await apiRequest('/messages/chatpartners', {
+            const data = await apiRequest('/api/messages/chatpartners', {
                 credentials: 'include'
             });
             set({allChatPartners: data})

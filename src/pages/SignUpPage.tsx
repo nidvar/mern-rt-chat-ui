@@ -69,7 +69,7 @@ const SignUpPage = function(){
             })
         };
         
-        const result = await apiRequest('/auth/signup', payload);
+        const result = await apiRequest('/api/auth/signup', payload);
         if(result){
             console.log(result.message);
             setLoading(false);
