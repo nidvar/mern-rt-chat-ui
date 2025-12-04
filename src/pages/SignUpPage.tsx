@@ -71,7 +71,6 @@ const SignUpPage = function(){
         
         const result = await apiRequest('/api/auth/signup', payload);
         if(result){
-            console.log(result.message);
             setLoading(false);
             navigate('/complete');
         }else{

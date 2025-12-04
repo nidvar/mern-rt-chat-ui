@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { apiRequest } from "../utils/utils";
 import { useChatStore } from "./useChatStore";
 
-import type { MessageType } from "../utils/types";
+// import type { MessageType } from "../utils/types";
 
 type AuthStore = {
     socket: Socket | null
@@ -124,11 +124,11 @@ export const useAuthStore = create<AuthStore>(function(set, get){
             });
             socket.connect();
             set({socket: socket});
-            socket.on('allMessages', (messages) => {
-                messages.forEach((item: MessageType)=>{
-                    console.log(item)
-                });
-            });
+            // socket.on('allMessages', (messages) => {
+            //     messages.forEach((item: MessageType)=>{
+            //         console.log(item)
+            //     });
+            // });
         }
     }
 })
