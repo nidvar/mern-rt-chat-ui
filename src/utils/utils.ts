@@ -17,14 +17,26 @@ export const apiRequest = async (route: string, payload: FetchPayloadType) => {
   };
 
   try {
-    const res = await fetch(route, finalPayload); // <- RELATIVE PATH
-    const data = await res.json();
-    return data;
+    const res = await fetch(route, finalPayload);
+
+    // DEBUG LOG: show raw text first
+    const text = await res.text();
+    console.log('Raw response for', route, ':', text);
+
+    // try parsing JSON if possible
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error('Failed to parse JSON:', e);
+      return { message: 'Invalid JSON response' };
+    }
+
   } catch (err) {
-    console.error(err);
+    console.error('Network error:', err);
     return { message: 'Network error' };
   }
 }
+
 
 
 export const daysAgoLabel = function (isoString: string | undefined): string {
