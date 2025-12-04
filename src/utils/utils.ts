@@ -1,14 +1,12 @@
 type FetchPayloadType = {
   method?: string;
   headers?: Record<string, string>;
-  credentials?: RequestCredentials;
   body?: string;
 }
 
 export const apiRequest = async (route: string, payload: FetchPayloadType) => {
   const finalPayload: RequestInit = {
     method: payload.method || 'GET',
-    credentials: payload.credentials || 'include',
     headers: {
       'Content-Type': 'application/json',
       ...(payload.headers || {})

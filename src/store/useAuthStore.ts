@@ -44,7 +44,6 @@ export const useAuthStore = create<AuthStore>(function(set, get){
         logout: async function(){
             const payload = {
                 method: 'POST',
-                credentials: 'include' as RequestCredentials
             };
             await apiRequest('/auth/logout', payload);
             get().disconnectSocket();
@@ -62,9 +61,7 @@ export const useAuthStore = create<AuthStore>(function(set, get){
         },
         authenticate: async function(){
             try{
-                const res = await fetch('/auth/checkAuth', {
-                    credentials: 'include',
-                });
+                const res = await fetch('/auth/checkAuth');
                 if(res.ok){
                     const data = await res.json();
                     set(()=>{

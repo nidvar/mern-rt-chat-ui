@@ -24,11 +24,9 @@ const LoginPage = function(){
 
         const payload = {
             method: 'POST',
-            mode: 'cors' as RequestMode,
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'include' as RequestCredentials,
             body: JSON.stringify({
                 email: email,
                 password: password

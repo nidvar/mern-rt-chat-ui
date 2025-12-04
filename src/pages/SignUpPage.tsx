@@ -60,7 +60,6 @@ const SignUpPage = function(){
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'include' as RequestCredentials,
             body: JSON.stringify({
                 email: email,
                 username: username,
